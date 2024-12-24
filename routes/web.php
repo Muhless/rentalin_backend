@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\AuthController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,3 +22,13 @@ Route::get('/', function () {
 Route::get('/homepage', function () {
     return view('homepage');
 });
+
+Route::get('login', [App\Http\Controllers\AuthController::class, 'showLoginForm'])->name('login');
+Route::post('login', [App\Http\Controllers\AuthController::class, 'login']);
+Route::post('logout', [App\Http\Controllers\AuthController::class, 'logout'])->name('logout');
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('register', [AuthController::class, 'showRegistrationForm'])->name('register');
+Route::post('register', [AuthController::class, 'register'])->name('register.post');
