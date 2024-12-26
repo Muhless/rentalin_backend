@@ -6,29 +6,25 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
-        Schema::create('family_cars', function (Blueprint $table) {
+        Schema::create('cars', function (Blueprint $table) {
             $table->id();
+            $table->string('category');
             $table->string('brand');
             $table->string('model');
-            $table->string('icon_path');
-            $table->string('image_path');
-            $table->string('kapasitas');
-            $table->string('transmisi');
-            $table->bigInteger('harga');
+            $table->text('icon_path');
+            $table->text('image_path');
+            $table->string('capacity');
+            $table->string('transmission');
+            $table->bigInteger('price');
+            $table->string('status');
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
-        Schema::dropIfExists('family');
+        Schema::dropIfExists('cars');
     }
 };

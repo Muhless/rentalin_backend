@@ -5,20 +5,18 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-use Laravel\Sanctum\HasApiTokens;
 
-class AuthController extends Controller
+class UsersController extends Controller
 {
     public function register(Request $request)
     {
-        // Validasi input
         $rules = [
-            'name' => 'required|string',
+            'username' => 'required|string|max:50',
             'email' => 'required|email|string|unique:users',
-            'password' => 'required|string|min:6'
+            'phone' => 'required|string|max:15|unique:users',
+            'password' => 'required|string|min:8|confirmed',
         ];
 
         $validator = Validator::make($request->all(), $rules);
@@ -28,14 +26,13 @@ class AuthController extends Controller
         }
 
         try {
-            // Membuat user baru
             $user = User::create([
-                'name' => $request->name,
+                'username' => $request->username,
                 'email' => $request->email,
-                'password' => Hash::make($request->password)
+                'phone' => $request->phone,
+                'password' => Hash::make($request->password),
             ]);
 
-            // Membuat token untuk user
             $token = $user->createToken('personal access token')->plainTextToken;
 
             $response = [
@@ -45,17 +42,15 @@ class AuthController extends Controller
 
             return response()->json($response, 201);
         } catch (Exception $e) {
-            // Menangani error
             return response()->json(['error' => 'Something went wrong. Please try again later.'], 500);
         }
     }
 
     public function login(Request $request)
     {
-        // Validasi input login
         $rules = [
-            'email' => 'required|email',
-            'password' => 'required|string'
+            'username' => 'required|string',
+            'password' => 'required|string',
         ];
 
         $validator = Validator::make($request->all(), $rules);
@@ -65,11 +60,13 @@ class AuthController extends Controller
         }
 
         try {
-            // Cari user berdasarkan email
             $user = User::where('email', $request->email)->first();
 
-            if ($user && Hash::check($request->password, $user->password)) {
-                // Membuat token jika login berhasil
+            if (!$user) {
+                return response()->json(['message' => 'User not found'], 404);
+            }
+
+            if (Hash::check($request->password, $user->password)) {
                 $token = $user->createToken('personal access token')->plainTextToken;
 
                 $response = [
@@ -79,11 +76,9 @@ class AuthController extends Controller
 
                 return response()->json($response, 200);
             } else {
-                // Jika email atau password salah
-                return response()->json(['message' => 'Invalid email or password'], 400);
+                return response()->json(['message' => 'Invalid credentials'], 401);
             }
         } catch (Exception $e) {
-            // Menangani error
             return response()->json(['error' => 'Something went wrong. Please try again later.'], 500);
         }
     }

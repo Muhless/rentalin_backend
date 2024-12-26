@@ -1,8 +1,8 @@
 <?php
 
 use App\Http\Controllers\Api\DataController;
-use App\Http\Controllers\ApiController;
-use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CarsController;
+use App\Http\Controllers\UsersController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -22,8 +22,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 
-Route::get('/users', [DataController::class, 'index']);
-Route::get('/cars/family', [ApiController::class, 'getFamilyCars']);
+// Route::get('/users', [DataController::class, 'index']);
 
-Route::post('/auth/register', [AuthController::class, 'register']);
-Route::post('/auth/login', [AuthController::class, 'login']);
+Route::post('/auth/register', [UsersController::class, 'register']);
+Route::post('/auth/login', [UsersController::class, 'login']);
+
+Route::apiResource('/cars', CarsController::class);
+Route::apiResource('/akun', UsersController::class);

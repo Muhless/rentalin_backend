@@ -2,10 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\FamilyCar;
-use Illuminate\Http\Request;
+use App\Models\Cars;
 use App\Models\User;
-use Database\Seeders\familyCarsSeeder;
 
 class ApiController extends Controller
 {
@@ -14,9 +12,9 @@ class ApiController extends Controller
         $users = User::all();
         return response()->json($users);
     }
-    public function getFamilyCars()
+    public function getCars()
     {
-        $data = FamilyCar::all();
+        $data = Cars::all();
         return response()->json($data);
     }
 }
