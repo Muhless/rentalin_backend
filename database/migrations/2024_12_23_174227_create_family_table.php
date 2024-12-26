@@ -11,11 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('family', function (Blueprint $table) {
+        Schema::create('family_cars', function (Blueprint $table) {
             $table->id();
-            $table->string('nama_mobil');
-            $table->bigInteger('harga');
+            $table->string('brand');
+            $table->string('model');
+            $table->string('icon_path');
+            $table->string('image_path');
+            $table->string('kapasitas');
             $table->string('transmisi');
+            $table->bigInteger('harga');
             $table->timestamps();
         });
     }
