@@ -11,19 +11,22 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('payments', function (Blueprint $table) {
+        Schema::create('payment_methods', function (Blueprint $table) {
             $table->id();
-            $table->decimal('amount', 10, 2);
-            $table->string('payment_status');
-            $table->timestamp('payment_date');
+            $table->unsignedBigInteger('payment_id');
+            $table->string('name'); //pembayaran via apa
             $table->timestamps();
+
+            $table->foreign('payment_id')->references('id')->on('payments')->onDelete('cascade');
         });
     }
+
+
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::dropIfExists('payments');
+        Schema::dropIfExists('payment_methods');
     }
 };

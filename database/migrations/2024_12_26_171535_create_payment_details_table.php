@@ -13,14 +13,13 @@ return new class extends Migration
     {
         Schema::create('payment_details', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('payment_id');
-            $table->string('detail_name');
+            $table->unsignedBigInteger('payment_method_id');
+            $table->string('detail'); //nama rekening, e-wallet
             $table->timestamps();
 
-            $table->foreign('payment_id')->references('id')->on('payments')->onDelete('cascade');
+            $table->foreign('payment_method_id')->references('id')->on('payment_methods');
         });
     }
-
 
     /**
      * Reverse the migrations.

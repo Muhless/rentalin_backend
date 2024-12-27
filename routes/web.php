@@ -1,6 +1,9 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\PaymentDetailController;
+use App\Http\Controllers\PaymentMethodController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -19,16 +22,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/homepage', function () {
-    return view('homepage');
-});
-
-Route::get('login', [App\Http\Controllers\AuthController::class, 'showLoginForm'])->name('login');
-Route::post('login', [App\Http\Controllers\AuthController::class, 'login']);
-Route::post('logout', [App\Http\Controllers\AuthController::class, 'logout'])->name('logout');
-
 Auth::routes();
-
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('register', [AuthController::class, 'showRegistrationForm'])->name('register');
-Route::post('register', [AuthController::class, 'register'])->name('register.post');
+Route::resource('payment', PaymentController::class);
+Route::resource('payment-methods', PaymentMethodController::class);
+Route::resource('payment-details', PaymentDetailController::class);

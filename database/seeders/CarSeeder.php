@@ -5,11 +5,10 @@ namespace Database\Seeders;
 use App\Models\Cars;
 use Illuminate\Database\Seeder;
 
-class CarsSeeder extends Seeder
+class CarSeeder extends Seeder
 {
     public function run(): void
     {
-
         Cars::create([
             'category' => 'family',
             'brand' => 'Honda',
