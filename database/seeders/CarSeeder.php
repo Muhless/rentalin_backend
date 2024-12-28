@@ -2,83 +2,79 @@
 
 namespace Database\Seeders;
 
-use App\Models\Cars;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Storage;
+use App\Models\Cars;
 
 class CarSeeder extends Seeder
 {
-    public function run(): void
+    public function run()
     {
-        Cars::create([
-            'category' => 'family',
-            'brand' => 'Honda',
-            'model' => 'Brio',
-            'icon_path' => 'assets/image/icons/family/toyota.png',
-            'image_path' => 'assets/image/cars/family/honda.png',
-            'capacity' => 4,
-            'transmission' => 'Manual',
-            'price' => 150000,
-            'status' => 'Available',
+        // Membuat direktori untuk menyimpan gambar mobil jika belum ada
+        Storage::disk('public')->makeDirectory('assets/cars/family');
+        Storage::disk('public')->makeDirectory('assets/cars/commercial');
+        Storage::disk('public')->makeDirectory('assets/cars/luxury');
 
-        ]);
+        $luxuryCarImages = [
+            [
+                'brand' => 'Honda',
+                'model' => 'Brio',
+                'category' => 'family',
+                'image_url' => 'assets/cars/family/brio.png',
+                'capacity' => '4',
+                'transmission' => 'Manual',
+                'lunggage_capacity' => '500 L',
+                'features' => 'AC',
+                'fuel_type' => 'Bensin',
+                'fuel_consumption' => '12 km/l',
+                'price' => 3500000,
+                'status' => 'Tersedia',
+            ],
+            [
+                'brand' => 'Toyota',
+                'model' => 'Pickup',
+                'category' => 'commercial',
+                'image_url' => 'assets/cars/commercial/box.png',
+                'capacity' => '2',
+                'transmission' => 'Manual',
+                'lunggage_capacity' => '500 L',
+                'features' => 'Sunroof',
+                'fuel_type' => 'Bensin',
+                'fuel_consumption' => '12 km/l',
+                'price' => 200000,
+                'status' => 'Tersedia',
+            ],
+            [
+                'brand' => 'Audi',
+                'model' => 'V6',
+                'category' => 'luxury',
+                'image_url' => 'assets/cars/luxury/audi.png',
+                'capacity' => '2',
+                'transmission' => 'Automatic',
+                'lunggage_capacity' => '450 L',
+                'features' => 'AC',
+                'fuel_type' => 'Diesel',
+                'fuel_consumption' => '15 km/l',
+                'price' => 4000000,
+                'status' => 'available',
+            ],
+        ];
 
-        Cars::create([
-            'category' => 'family',
-            'brand' => 'Honda',
-            'model' => 'Brio',
-            'icon_path' => 'assets/image/icons/family/toyota.png',
-            'image_path' => 'assets/image/cars/family/brio.png',
-            'capacity' => 4,
-            'transmission' => 'Automatic',
-            'price' => 200000,
-            'status' => 'Available',
-        ]);
-
-        Cars::create([
-            'category' => 'commercial',
-            'brand' => 'Mitsubishi',
-            'model' => 'Pajero',
-            'icon_path' => 'assets/image/icons/family/mitshubishi.png',
-            'image_path' => 'assets/image/cars/family/pajero.png',
-            'capacity' => 4,
-            'transmission' => 'Automatic',
-            'price' => 400000,
-            'status' => 'Not Available',
-        ]);
-
-        Cars::create([
-            'category' => 'commercial',
-            'brand' => 'Toyota',
-            'model' => 'Pickup',
-            'icon_path' => 'assets/image/icons/family/toyota.png',
-            'image_path' => 'assets/image/cars/commercial/pickup.png',
-            'capacity' => 4,
-            'transmission' => 'Manual',
-            'price' => 320000,
-            'status' => 'Available',
-        ]);
-
-        Cars::create([
-            'category' => 'luxury',
-            'brand' => 'Audi',
-            'model' => 'A6',
-            'icon_path' => 'assets/image/icons/luxury/audi.png',
-            'image_path' => 'assets/image/cars/luxury/audi.png',
-            'capacity' => 4,
-            'transmission' => 'Manual',
-            'price' => 1000000,
-            'status' => 'Not Available',
-        ]);
-        Cars::create([
-            'category' => 'luxury',
-            'brand' => 'Lamborghini',
-            'model' => 'Gallardo',
-            'icon_path' => 'assets/image/icons/luxury/lamborghini.png',
-            'image_path' => 'assets/image/cars/luxury/gallardo.png',
-            'capacity' => 2,
-            'transmission' => 'Manual',
-            'price' => 3500000,
-            'status' => 'Available',
-        ]);
+        foreach ($luxuryCarImages as $car) {
+            Cars::create([
+                'category' => $car['category'],
+                'brand' => $car['brand'],
+                'model' => $car['model'],
+                'image_url' => $car['image_url'],
+                'capacity' => $car['capacity'],
+                'transmission' => $car['transmission'],
+                'lunggage_capacity' => $car['lunggage_capacity'],
+                'features' => $car['features'],
+                'fuel_type' => $car['fuel_type'],
+                'fuel_consumption' => $car['fuel_consumption'],
+                'price' => $car['price'],
+                'status' => $car['status'],
+            ]);
+        }
     }
 }

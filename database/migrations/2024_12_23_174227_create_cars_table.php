@@ -13,10 +13,13 @@ return new class extends Migration
             $table->string('category');
             $table->string('brand');
             $table->string('model');
-            $table->text('icon_path');
-            $table->text('image_path');
+            $table->text('image_url');
             $table->string('capacity');
             $table->string('transmission');
+            $table->string('lunggage_capacity');
+            $table->string('features');
+            $table->string('fuel_type');
+            $table->string('fuel_consumption');
             $table->bigInteger('price');
             $table->string('status');
             $table->timestamps();

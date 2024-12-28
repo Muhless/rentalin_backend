@@ -24,6 +24,3 @@ Route::get('/', function () {
 
 Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::resource('payment', PaymentController::class);
-Route::resource('payment-methods', PaymentMethodController::class);
-Route::resource('payment-details', PaymentDetailController::class);

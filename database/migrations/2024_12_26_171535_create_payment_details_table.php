@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('payment_method_id');
             $table->string('detail'); //nama rekening, e-wallet
-            $table->timestamps();
 
             $table->foreign('payment_method_id')->references('id')->on('payment_methods');
         });

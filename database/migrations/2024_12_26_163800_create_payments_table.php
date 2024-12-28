@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->decimal('amount', 10, 2);
             $table->string('payment_status');
-            $table->timestamp('payment_date');
             $table->timestamps();
         });
     }

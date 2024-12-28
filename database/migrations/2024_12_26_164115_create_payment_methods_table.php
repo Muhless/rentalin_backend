@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('payment_id');
             $table->string('name'); //pembayaran via apa
-            $table->timestamps();
 
             $table->foreign('payment_id')->references('id')->on('payments')->onDelete('cascade');
         });

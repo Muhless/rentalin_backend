@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class Cars extends Model
 {
@@ -15,27 +16,26 @@ class Cars extends Model
         'category',
         'brand',
         'model',
-        'icon_path',
-        'image_path',
+        'image_url',
         'capacity',
         'transmission',
+        'lunggage_capacity',
+        'features',
+        'fuel_type',
+        'fuel_consumption',
         'price',
         'status',
     ];
-
 
     protected $casts = [
         'price' => 'integer',
         'status' => 'integer',
     ];
 
-    public function getImageUrlAttribute()
-    {
-        return asset('storage/' . $this->image_path);
-    }
 
-    public function getIconUrlAttribute()
-    {
-        return asset('storage/' . $this->icon_path);
-    }
+    // public function getImageUrlAttribute()
+    // {
+
+    //     return $this->image_url ? Storage::url($this->image_url) : null;
+    // }
 }
