@@ -1,10 +1,12 @@
 <?php
 
 use App\Http\Controllers\Api\DataController;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CarController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\PaymentDetailController;
 use App\Http\Controllers\PaymentMethodController;
+use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -27,11 +29,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 // Route::get('/users', [DataController::class, 'index']);
 
-Route::post('/auth/register', [UserController::class, 'register']);
-Route::post('/auth/login', [UserController::class, 'login']);
+Route::post('login', [AuthController::class, 'login']);
+Route::post('register', [AuthController::class, 'register']);
 
 Route::apiResource('users', UserController::class);
 Route::apiResource('cars', CarController::class);
-Route::apiResource('payments', PaymentController::class);
-Route::apiResource('payments-methods', PaymentMethodController::class);
-Route::apiResource('payments-details', PaymentDetailController::class);
+Route::apiResource('transactions', TransactionController::class);

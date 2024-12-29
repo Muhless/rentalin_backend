@@ -8,6 +8,13 @@ use Illuminate\Support\Facades\Storage;
 
 class CarController extends Controller
 {
+
+    public function getCarsByCategory(Request $request)
+    {
+        $category = $request->query('category');
+        $cars = Cars::where('category', $category)->get();
+        return response()->json($cars);
+    }
     public function index()
     {
         $cars = Cars::all()->map(function ($car) {
