@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
-use App\Models\Transaction;
 use Illuminate\Database\Seeder;
+use App\Models\Transaction;
 
 class TransactionSeeder extends Seeder
 {
@@ -14,29 +14,38 @@ class TransactionSeeder extends Seeder
      */
     public function run()
     {
-        // Sample data for transaction
+        // Contoh data dummy untuk transaksi
         Transaction::create([
-            'user_id' => 1,
-            'car_id' => 1,
-            'payment_id' => 1,
-            'rent_date' => '2024-12-01',
-            'return_date' => '2024-12-10',
-            'rent_duration' => '10',
+            'users' => 'admin',
+            'cars' => 'Toyota Pickup',
+            'rent_date' => '2025-01-02',
+            'return_date' => '2025-01-06',
+            'rent_duration' => 4,
+            'payment' => 'Credit Card',
+            'total' => 1200000,
+            'status' => 'Pending',
+        ]);
+
+        Transaction::create([
+            'users' => 'john_doe',
+            'cars' => 'Honda CRV',
+            'rent_date' => '2025-01-10',
+            'return_date' => '2025-01-15',
+            'rent_duration' => 5,
+            'payment' => 'Cash',
+            'total' => 1500000,
+            'status' => 'Completed',
+        ]);
+
+        Transaction::create([
+            'users' => 'jane_doe',
+            'cars' => 'Suzuki Carry',
+            'rent_date' => '2025-01-18',
+            'return_date' => '2025-01-22',
+            'rent_duration' => 4,
+            'payment' => 'Bank Transfer',
             'total' => 1000000,
-            'status' => 'completed',
+            'status' => 'Cancelled',
         ]);
-
-        Transaction::create([
-            'user_id' => 2,
-            'car_id' => 2,
-            'payment_id' => 2,
-            'rent_date' => '2024-12-05',
-            'return_date' => '2024-12-12',
-            'rent_duration' => '7',
-            'total' => 700000,
-            'status' => 'pending',
-        ]);
-
-        // You can add more sample data as needed
     }
 }

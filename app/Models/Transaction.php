@@ -9,30 +9,32 @@ class Transaction extends Model
 {
     use HasFactory;
 
+    protected $table = 'transactions';
+
     protected $fillable = [
-        'user_id',
-        'car_id',
-        'payment_id',
+        'users',
+        'cars',
         'rent_date',
         'return_date',
         'rent_duration',
+        'payment',
         'total',
         'status',
     ];
 
-    // Define the relationship with the User model
+    protected $casts = [
+        'rent_date' => 'date',
+        'return_date' => 'date',
+        'rent_duration' => 'integer',
+        'total' => 'integer',
+    ];
+
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'users', 'id');
     }
-
     public function car()
     {
-        return $this->belongsTo(Cars::class);
-    }
-
-    public function payment()
-    {
-        return $this->belongsTo(Payment::class);
+        return $this->belongsTo(Cars::class, 'cars', 'id'); 
     }
 }

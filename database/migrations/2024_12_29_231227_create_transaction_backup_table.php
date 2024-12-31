@@ -10,12 +10,18 @@ return new class extends Migration
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
-            $table->string('users');
-            $table->string('cars');
+            $table->foreignId('user_id')
+                ->constrained('users')
+                ->onDelete('cascade');
+            $table->foreignId('car_id')
+                ->constrained('cars')
+                ->onDelete('cascade');
             $table->date('rent_date');
             $table->date('return_date');
-            $table->integer('rent_duration');
-            $table->string('payment');
+            $table->string('rent_duration');
+            $table->foreignId('payment_id')
+                ->constrained('payments')
+                ->onDelete('cascade');
             $table->integer('total');
             $table->string('status');
             $table->timestamps();
@@ -29,6 +35,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('transactions');
+        Schema::dropIfExists('transaksis');
     }
 };

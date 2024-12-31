@@ -2,60 +2,85 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Transaction;
 use Illuminate\Http\Request;
+use App\Models\Transaction;
 
 class TransactionController extends Controller
 {
-    // Show all transactions
+    // Menampilkan semua transaksi
     public function index()
     {
         $transactions = Transaction::all();
-        return response()->json($transactions);
+        return response()->json($transactions, 200);
     }
 
-    // Show a single transaction
+    // Menampilkan transaksi berdasarkan ID
     public function show($id)
     {
-        $transaction = Transaction::findOrFail($id);
-        return response()->json($transaction);
+        $transaction = Transaction::find($id);
+
+        if (!$transaction) {
+            return response()->json(['message' => 'Transaction not found'], 404);
+        }
+
+        return response()->json($transaction, 200);
     }
 
-    // Create a new transaction
+    // Menambahkan transaksi baru
     public function store(Request $request)
     {
-        $request->validate([
-            'user_id' => 'required',
-            'car_id' => 'required',
-            'payment_id' => 'required',
+        $validatedData = $request->validate([
+            'users' => 'required|string|max:255',
+            'cars' => 'required|string|max:255',
             'rent_date' => 'required|date',
             'return_date' => 'required|date',
             'rent_duration' => 'required|integer',
-            'total' => 'required|numeric',
-            'status' => 'required|string',
+            'payment' => 'required|string|max:255',
+            'total' => 'required|integer',
+            'status' => 'required|string|max:255',
         ]);
 
-        $transaction = Transaction::create($request->all());
+        $transaction = Transaction::create($validatedData);
 
-        return response()->json($transaction, 201);
+        return response()->json(['message' => 'Transaction created successfully', 'data' => $transaction], 201);
     }
 
-    // Update a transaction
+    // Memperbarui transaksi
     public function update(Request $request, $id)
     {
-        $transaction = Transaction::findOrFail($id);
+        $transaction = Transaction::find($id);
 
-        $transaction->update($request->all());
+        if (!$transaction) {
+            return response()->json(['message' => 'Transaction not found'], 404);
+        }
 
-        return response()->json($transaction);
+        $validatedData = $request->validate([
+            'users' => 'nullable|string|max:255',
+            'cars' => 'nullable|string|max:255',
+            'rent_date' => 'nullable|date',
+            'return_date' => 'nullable|date',
+            'rent_duration' => 'nullable|integer',
+            'payment' => 'nullable|string|max:255',
+            'total' => 'nullable|integer',
+            'status' => 'nullable|string|max:255',
+        ]);
+
+        $transaction->update($validatedData);
+
+        return response()->json(['message' => 'Transaction updated successfully', 'data' => $transaction], 200);
     }
 
-    // Delete a transaction
+    // Menghapus transaksi
     public function destroy($id)
     {
-        $transaction = Transaction::findOrFail($id);
+        $transaction = Transaction::find($id);
+
+        if (!$transaction) {
+            return response()->json(['message' => 'Transaction not found'], 404);
+        }
+
         $transaction->delete();
 
-        return response()->json(['message' => 'Transaction deleted successfully']);
+        return response()->json(['message' => 'Transaction deleted successfully'], 200);
     }
 }
