@@ -1,23 +1,27 @@
-@extends('layouts.app')
+    @extends('partials.app')
+    @section('title', 'Homepage')
+    @section('style')
 
-@section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Dashboard') }}</div>
 
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
 
-                    {{ __('You are logged in!') }}
-                </div>
+
+
+
+
+    @endsection
+
+
+    @section('content')
+        <div class="content">
+            <h1>Welcome, {{ auth()->user()->username }}</h1>
+            <p>
+                You are successfully logged in! This is your dashboard, where you can manage your account and access
+                other features.
+            </p>
+            <div class="actions">
+                <a href="{{ route('rent') }}">Rental</a>
+                <a href="{{ route('car') }}">Mobil</a>
+                <a href="#">Akun</a>
             </div>
         </div>
-    </div>
-</div>
-@endsection
+    @endsection

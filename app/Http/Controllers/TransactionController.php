@@ -7,14 +7,13 @@ use App\Models\Transaction;
 
 class TransactionController extends Controller
 {
-    // Menampilkan semua transaksi
     public function index()
     {
+        return view('rent');
         $transactions = Transaction::all();
         return response()->json($transactions, 200);
     }
 
-    // Menampilkan transaksi berdasarkan ID
     public function show($id)
     {
         $transaction = Transaction::find($id);
@@ -26,7 +25,6 @@ class TransactionController extends Controller
         return response()->json($transaction, 200);
     }
 
-    // Menambahkan transaksi baru
     public function store(Request $request)
     {
         $validatedData = $request->validate([
@@ -41,19 +39,15 @@ class TransactionController extends Controller
         ]);
 
         $transaction = Transaction::create($validatedData);
-
         return response()->json(['message' => 'Transaction created successfully', 'data' => $transaction], 201);
     }
 
-    // Memperbarui transaksi
     public function update(Request $request, $id)
     {
         $transaction = Transaction::find($id);
-
         if (!$transaction) {
             return response()->json(['message' => 'Transaction not found'], 404);
         }
-
         $validatedData = $request->validate([
             'users' => 'nullable|string|max:255',
             'cars' => 'nullable|string|max:255',
@@ -64,23 +58,17 @@ class TransactionController extends Controller
             'total' => 'nullable|integer',
             'status' => 'nullable|string|max:255',
         ]);
-
         $transaction->update($validatedData);
-
         return response()->json(['message' => 'Transaction updated successfully', 'data' => $transaction], 200);
     }
 
-    // Menghapus transaksi
     public function destroy($id)
     {
         $transaction = Transaction::find($id);
-
         if (!$transaction) {
             return response()->json(['message' => 'Transaction not found'], 404);
         }
-
         $transaction->delete();
-
         return response()->json(['message' => 'Transaction deleted successfully'], 200);
     }
 }

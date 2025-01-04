@@ -17,6 +17,7 @@ class CarController extends Controller
     }
     public function index()
     {
+        return view('car');
         $cars = Cars::all()->map(function ($car) {
             return [
                 'id' => $car->id,
