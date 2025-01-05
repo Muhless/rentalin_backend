@@ -1,14 +1,8 @@
 <?php
 
-use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CarController;
-use App\Http\Controllers\HomeController;
-use App\Http\Controllers\PaymentController;
-use App\Http\Controllers\PaymentDetailController;
-use App\Http\Controllers\PaymentMethodController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\UserController;
-use App\Models\Transaction;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -24,14 +18,21 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('home');
+    return view('auth.login');
 });
 
 Auth::routes();
 Route::post('/login', [UserController::class, 'login']);
 Route::get('/home', function () {
-    return view('home');
+    return view('pages.home');
 })->middleware('auth');
 
 Route::get('/rents', [TransactionController::class, 'index'])->name('rents');
+
 Route::get('/cars', [CarController::class, 'index'])->name('cars');
+Route::get('/cars/create', [CarController::class, 'create'])->name('cars.create');
+Route::get('/cars/edit/{id}', [CarController::class, 'edit'])->name('cars.edit');
+Route::put('/cars/update/{id}', [CarController::class, 'update'])->name('cars.update');
+Route::delete('/cars/delete/{id}', [CarController::class, 'delete'])->name('cars.delete');
+
+
