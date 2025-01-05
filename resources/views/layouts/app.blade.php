@@ -1,80 +1,54 @@
-<!doctype html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!DOCTYPE html>
+        <html lang="en">
+            @include('layouts.partials.head')
 
-    <!-- CSRF Token -->
-    <meta name="csrf-token" content="{{ csrf_token() }}">
+            <body class="flex">
+                <div class="w-52 bg-white text-black h-screen fixed top-0 left-0 p-5">
+                    <div class="text-center mb-5">
+                        <a href="/home">
+                            <img src="{{ asset('images/logo.png') }}" alt="Logo" class="w-24 h-auto mx-auto mb-5">
+                        </a>
+                    </div>
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
-
-    <!-- Fonts -->
-    <link rel="dns-prefetch" href="//fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
-
-    <!-- Scripts -->
-    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
-</head>
-<body>
-    <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
-            <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
-                </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav me-auto">
-
-                    </ul>
-
-                    <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav ms-auto">
-                        <!-- Authentication Links -->
-                        @guest
-                            @if (Route::has('login'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                                </li>
-                            @endif
-
-                            @if (Route::has('register'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                                </li>
-                            @endif
-                        @else
-                            <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }}
-                                </a>
-
-                                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
-                                    </a>
-
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                        @csrf
-                                    </form>
-                                </div>
-                            </li>
-                        @endguest
+                    <ul class="list-none p-0 m-0">
+                        <li class="mb-3">
+                            <a href="/home"
+                                class="block text-black text-base p-2 rounded hover:bg-blue-600 hover:text-white transition">
+                                Dashboard
+                            </a>
+                        </li>
+                        <li class="mb-3">
+                            <a href="{{ route('rents') }}"
+                                class="block text-black text-base p-2 rounded hover:bg-blue-600 hover:text-white transition">
+                                Rental
+                            </a>
+                        </li>
+                        <li class="mb-3">
+                            <a href="{{ route('cars') }}"
+                                class="block text-black text-base p-2 rounded hover:bg-blue-600 hover:text-white transition">
+                                Mobil
+                            </a>
+                        </li>
+                        <li>
+                            <form action="/logout" method="POST" class="m-0">
+                                @csrf
+                                <button type="submit"
+                                    class="w-full text-left bg-none border-none text-black text-base p-2 rounded hover:bg-red-600 hover:text-white transition">
+                                    Logout
+                                </button>
+                            </form>
+                        </li>
                     </ul>
                 </div>
-            </div>
-        </nav>
+                <div class="ml-52 flex-1 bg-gray-100 min-h-screen">
+                    <div class="sticky top-0 z-10 bg-white shadow">
+                        @include('layouts.partials.navbar')
+                    </div>
+                    <div class="p-5">
+                        @yield('content')
+                    </div>
+                </div>
 
-        <main class="py-4">
-            @yield('content')
-        </main>
-    </div>
-</body>
-</html>
+            </body>
+
+        </html>

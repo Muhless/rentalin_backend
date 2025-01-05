@@ -24,7 +24,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('home');
 });
 
 Auth::routes();
@@ -33,5 +33,5 @@ Route::get('/home', function () {
     return view('home');
 })->middleware('auth');
 
-Route::get('/rent', [TransactionController::class, 'index'])->name('rent');
-Route::get('/car', [CarController::class, 'index'])->name('car');
+Route::get('/rents', [TransactionController::class, 'index'])->name('rents');
+Route::get('/cars', [CarController::class, 'index'])->name('cars');

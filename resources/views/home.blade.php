@@ -1,15 +1,5 @@
-    @extends('partials.app')
+    @extends('layouts.app')
     @section('title', 'Homepage')
-    @section('style')
-
-
-
-
-
-
-
-    @endsection
-
 
     @section('content')
         <div class="content">
@@ -19,8 +9,8 @@
                 other features.
             </p>
             <div class="actions">
-                <a href="{{ route('rent') }}">Rental</a>
-                <a href="{{ route('car') }}">Mobil</a>
+                <a href="{{ route('rents') }}">Rental</a>
+                <a href="{{ route('cars') }}">Mobil</a>
                 <a href="#">Akun</a>
             </div>
         </div>

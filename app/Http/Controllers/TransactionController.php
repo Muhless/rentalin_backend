@@ -9,7 +9,7 @@ class TransactionController extends Controller
 {
     public function index()
     {
-        return view('rent');
+        return view('pages.rents.index');
         $transactions = Transaction::all();
         return response()->json($transactions, 200);
     }
