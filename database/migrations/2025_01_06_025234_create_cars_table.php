@@ -12,27 +12,25 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('cars', function (Blueprint $table) {
-            $table->id();  // Primary key untuk tabel cars
-            $table->string('category');   // Kategori mobil
-            $table->string('brand');      // Merek mobil
-            $table->string('model');      // Model mobil
-            $table->text('image_url');    // URL gambar mobil
-            $table->decimal('price', 15, 2);  // Harga mobil
-            $table->string('status');     // Status mobil (misalnya tersedia atau disewa)
-
-            $table->unsignedBigInteger('feature_id')->nullable();
-            $table->foreign('feature_id')
-                ->references('id')
-                ->on('features')
-                ->onDelete('cascade');  
-
-            $table->timestamps();
+            $table->id();
+            $table->string('category');
+            $table->string('brand');
+            $table->string('model');
+            $table->string('image_url')->nullable();
+            $table->string('plate_number')->nullable();
+            $table->year('year')->nullable();
+            $table->string('color')->nullable();
+            $table->integer('price');
+            $table->string('status');
+            $table->string('capacity')->nullable();
+            $table->string('transmission')->nullable();
+            $table->string('luggage_capacity')->nullable();
+            $table->string('fuel_type')->nullable();
+            $table->string('fuel_consumption')->nullable();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
+
     public function down(): void
     {
         Schema::dropIfExists('cars');

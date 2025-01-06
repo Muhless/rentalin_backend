@@ -3,78 +3,47 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Storage;
-use App\Models\Cars;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class CarSeeder extends Seeder
 {
-    public function run()
+    /**
+     * Run the database seeds.
+     */
+    public function run(): void
     {
-        // Membuat direktori untuk menyimpan gambar mobil jika belum ada
-        Storage::disk('public')->makeDirectory('assets/cars/family');
-        Storage::disk('public')->makeDirectory('assets/cars/commercial');
-        Storage::disk('public')->makeDirectory('assets/cars/luxury');
-
-        $luxuryCarImages = [
+        DB::table('cars')->insert([
             [
-                'brand' => 'Honda',
-                'model' => 'Brio',
-                'category' => 'family',
-                'image_url' => 'assets/cars/family/honda.png',
-                'capacity' => '4',
-                'transmission' => 'Manual',
-                'lunggage_capacity' => '500 L',
-                'features' => 'AC',
-                'fuel_type' => 'Bensin',
-                'fuel_consumption' => '12 km/l',
-                'price' => 150000,
-                'status' => 'Tersedia',
-            ],
-            [
+                'category' => 'SUV',
                 'brand' => 'Toyota',
-                'model' => 'Pickup',
-                'category' => 'commercial',
-                'image_url' => 'assets/cars/commercial/pickup.png',
-                'capacity' => '2',
-                'transmission' => 'Manual',
-                'lunggage_capacity' => '500 L',
-                'features' => 'Sunroof',
-                'fuel_type' => 'Bensin',
-                'fuel_consumption' => '12 km/l',
-                'price' => 200000,
-                'status' => 'Tersedia',
+                'model' => 'RAV4',
+                'image_url' => 'public\storage\assets\cars\luxury\audi.png',
+                'price' => 35000,
+                'status' => 'available',
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
-                'brand' => 'Mitsubishi',
-                'model' => 'Pajero',
-                'category' => 'family',
-                'image_url' => 'assets/cars/family/vi.png',
-                'capacity' => '2',
-                'transmission' => 'Automatic',
-                'lunggage_capacity' => '450 L',
-                'features' => 'AC',
-                'fuel_type' => 'Diesel',
-                'fuel_consumption' => '15 km/l',
-                'price' => 350000,
+                'category' => 'Sedan',
+                'brand' => 'Honda',
+                'model' => 'Civic',
+                'image_url' => 'public\storage\assets\cars\luxury\R.png',
+                'price' => 25000,
                 'status' => 'available',
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
-        ];
-
-        foreach ($luxuryCarImages as $car) {
-            Cars::create([
-                'category' => $car['category'],
-                'brand' => $car['brand'],
-                'model' => $car['model'],
-                'image_url' => $car['image_url'],
-                'capacity' => $car['capacity'],
-                'transmission' => $car['transmission'],
-                'lunggage_capacity' => $car['lunggage_capacity'],
-                'features' => $car['features'],
-                'fuel_type' => $car['fuel_type'],
-                'fuel_consumption' => $car['fuel_consumption'],
-                'price' => $car['price'],
-                'status' => $car['status'],
-            ]);
-        }
+            [
+                'category' => 'Truck',
+                'brand' => 'Ford',
+                'model' => 'F-150',
+                'image_url' => 'public\storage\assets\cars\family\avanza.png',
+                'price' => 45000,
+                'status' => 'out_of_stock',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+        ]);
     }
 }

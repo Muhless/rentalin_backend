@@ -9,22 +9,27 @@ class Car extends Model
 {
     use HasFactory;
 
-    // Menentukan nama tabel jika tidak sesuai dengan plural dari model
     protected $table = 'cars';
-
-    // Menentukan kolom yang boleh diisi (mass assignable)
     protected $fillable = [
         'category',
         'brand',
         'model',
         'image_url',
+        'plate_number',
+        'year',
+        'color',
         'price',
         'status',
-        'feature_id',
+        'capacity',
+        'transmission',
+        'luggage_capacity',
+        'fuel_type',
+        'fuel_consumption',
     ];
 
-    public function feature()
-    {
-        return $this->belongsTo(Feature::class, 'feature_id');
-    }
+    protected $attributes = [
+        'status' => 'Tersedia',
+    ];
+
+    public $timestamps = false;
 }

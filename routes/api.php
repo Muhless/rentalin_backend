@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\Api\CarController as ApiCarController;
+use App\Http\Controllers\Api\RentalController as ApiRentalController;
+use App\Http\Controllers\Api\UserController as ApiUserController;
 use App\Http\Controllers\CarController;
 use App\Http\Controllers\RentalController;
 use App\Http\Controllers\UserController;
@@ -20,9 +23,9 @@ use Illuminate\Support\Facades\Route;
 //     return $request->user();
 // });
 
-Route::post('login', [UserController::class, 'login']);
-Route::post('register', [UserController::class, 'register']);
+Route::post('login', [ApiUserController::class, 'login']);
+Route::post('register', [ApiUserController::class, 'register']);
 
-Route::apiResource('users', UserController::class);
-Route::apiResource('cars', CarController::class);
-Route::apiResource('rentals', RentalController::class);
+Route::apiResource('users', ApiUserController::class);
+Route::apiResource('cars', ApiCarController::class);
+Route::apiResource('rentals', ApiRentalController::class);
