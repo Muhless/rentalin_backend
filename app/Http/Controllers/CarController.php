@@ -2,28 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Cars;
+use App\Models\Car;
+use App\Models\Feature;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 
 class CarController extends Controller
 {
-    public function getCarsByCategory(Request $request)
-    {
-        $category = $request->query('category');
-        $cars = Cars::where('category', $category)->get();
-        return response()->json($cars);
-    }
-
     public function index()
     {
-        $cars = Cars::all();
+        $cars = Car::with('feature')->get();
         return view('pages.cars.index', compact('cars'));
     }
 
     public function show($id)
     {
-        $car = Cars::find($id);
+        $car = Car::with('feature')->find($id);
 
         if (!$car) {
             return response()->json(['message' => 'Car not found'], 404);
@@ -32,103 +25,58 @@ class CarController extends Controller
         return response()->json($car);
     }
 
-   // In CarController.php
-public function store(Request $request)
-{
-    $request->validate([
-        'category' => 'required|string|max:20',
-        'brand' => 'required|string|max:20',
-        'model' => 'required|string|max:20',
-        'image_url' => 'required|image|mimes:png,jpg,jpeg|max:2048',
-        'price' => 'required|integer',
-        'status' => 'required|string|max:20',
-    ]);
+    // Menambah mobil baru
+    public function store(Request $request)
+    {
+        $request->validate([
+            'category' => 'required|string|max:255',
+            'brand' => 'required|string|max:255',
+            'model' => 'required|string|max:255',
+            'image_url' => 'required|string',
+            'price' => 'required|numeric',
+            'status' => 'required|string',
+            'feature_id' => 'required|exists:features,id',
+        ]);
 
-    // Handle the image upload
-    $imagePath = $request->file('image_url')->store('cars', 'public');
+        $car = Car::create($request->all());
 
-    // Create the new car
-    Cars::create([
-        'category' => $request->category,
-        'brand' => $request->brand,
-        'model' => $request->model,
-        'image_url' => $imagePath,
-        'price' => $request->price,
-        'status' => $request->status,
-    ]);
+        return view('pages.cars.create');
 
-    return redirect()->route('cars.index')->with('success', 'Mobil baru berhasil ditambahkan.');
-}
-
+    }
 
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'category' => 'required|string|max:20',
-            'brand' => 'required|string|max:20',
-            'model' => 'required|string|max:20',
-            'image_url' => 'nullable|image|mimes:png,jpg,jpeg|max:2048',
-            'capacity' => 'required|string|max:20',
-            'transmission' => 'required|string|max:20',
-            'lunggage_capacity' => 'required|string|max:50',
-            'features' => 'required|array',
-            'fuel_type' => 'required|string|max:20',
-            'fuel_consumption' => 'required|string|max:20',
-            'price' => 'required|integer',
-            'status' => 'required|string|max:20',
-        ]);
-
-        $car = Cars::find($id);
+        $car = Car::find($id);
 
         if (!$car) {
-            return redirect()->route('cars.index')->with('error', 'Mobil tidak ditemukan.');
+            return response()->json(['message' => 'Car not found'], 404);
         }
 
-        if ($request->hasFile('image_url')) {
-            Storage::delete('public/' . $car->image_url);
-            $imagePath = $request->file('image_url')->store('cars', 'public');
-            $car->image_url = $imagePath;
-        }
-
-        $car->update([
-            'category' => $request->category,
-            'brand' => $request->brand,
-            'model' => $request->model,
-            'capacity' => $request->capacity,
-            'transmission' => $request->transmission,
-            'lunggage_capacity' => $request->lunggage_capacity,
-            'features' => json_encode($request->features),
-            'fuel_type' => $request->fuel_type,
-            'fuel_consumption' => $request->fuel_consumption,
-            'price' => $request->price,
-            'status' => $request->status,
+        $request->validate([
+            'category' => 'required|string|max:255',
+            'brand' => 'required|string|max:255',
+            'model' => 'required|string|max:255',
+            'image_url' => 'required|string',
+            'price' => 'required|numeric',
+            'status' => 'required|string',
+            'feature_id' => 'required|exists:features,id',
         ]);
 
-        return redirect()->route('cars.index')->with('success', 'Data mobil berhasil diperbarui.');
+        $car->update($request->all());
+
+        return response()->json($car);
     }
 
-    public function delete($id)
+    public function destroy($id)
     {
-        $car = Cars::find($id);
+        $car = Car::find($id);
 
         if (!$car) {
-            return redirect()->route('cars.index')->with('error', 'Mobil tidak ditemukan.');
+            return response()->json(['message' => 'Car not found'], 404);
         }
 
-        Storage::delete('public/' . $car->image_url);
         $car->delete();
 
-        return redirect()->route('cars.index')->with('success', 'Data mobil berhasil dihapus.');
-    }
-
-    public function create()
-    {
-        return view('pages.cars.create');
-    }
-
-    public function edit($id)
-    {
-        $car = Cars::findOrFail($id);
-        return view('pages.cars.edit', compact('car'));
+        return response()->json(['message' => 'Car deleted successfully']);
     }
 }

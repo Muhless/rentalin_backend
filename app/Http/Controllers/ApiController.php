@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Cars;
+use App\Models\Car;
 use App\Models\User;
 
 class ApiController extends Controller
@@ -14,7 +14,7 @@ class ApiController extends Controller
     }
     public function getCars()
     {
-        $data = Cars::all();
+        $data = Car::all();
         return response()->json($data);
     }
 }

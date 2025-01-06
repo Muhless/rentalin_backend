@@ -8,7 +8,7 @@ return new class extends Migration
 {
     public function up()
     {
-        Schema::create('transactions', function (Blueprint $table) {
+        Schema::create('rentals', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')
                 ->constrained('users')
@@ -18,13 +18,10 @@ return new class extends Migration
                 ->onDelete('cascade');
             $table->date('rent_date');
             $table->date('return_date');
-            $table->string('rent_duration');
-            $table->foreignId('payment_id')
-                ->constrained('payments')
-                ->onDelete('cascade');
-            $table->integer('total');
-            $table->string('status');
-            $table->timestamps();
+            $table->integer('rent_duration');
+            $table->string('payment');  // Payment method (could be 'Credit Card', 'Cash', etc.)
+            $table->integer('total');  // Total rental cost
+            $table->timestamps();  // Created and updated timestamps
         });
     }
 
@@ -35,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('transaksis');
+        Schema::dropIfExists('rentals');
     }
 };

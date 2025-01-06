@@ -9,8 +9,8 @@
                 other features.
             </p>
             <div class="actions">
-                <a href="{{ route('rents') }}">Rental</a>
-                <a href="{{ route('cars') }}">Mobil</a>
+                <a href="{{ route('rents.index') }}">Rental</a>
+                <a href="{{ route('cars.index') }}">Mobil</a>
                 <a href="#">Akun</a>
             </div>
         </div>

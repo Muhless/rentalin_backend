@@ -18,13 +18,13 @@
                             </a>
                         </li>
                         <li class="mb-3">
-                            <a href="{{ route('rents') }}"
+                            <a href="{{ route('rentals.index') }}"
                                 class="block text-black text-base p-2 rounded hover:bg-blue-600 hover:text-white transition">
                                 Rental
                             </a>
                         </li>
                         <li class="mb-3">
-                            <a href="{{ route('cars') }}"
+                            <a href="{{ route('cars.index') }}"
                                 class="block text-black text-base p-2 rounded hover:bg-blue-600 hover:text-white transition">
                                 Mobil
                             </a>

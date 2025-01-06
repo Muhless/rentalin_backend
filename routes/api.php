@@ -1,14 +1,8 @@
 <?php
 
-use App\Http\Controllers\Api\DataController;
-use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CarController;
-use App\Http\Controllers\PaymentController;
-use App\Http\Controllers\PaymentDetailController;
-use App\Http\Controllers\PaymentMethodController;
-use App\Http\Controllers\TransactionController;
+use App\Http\Controllers\RentalController;
 use App\Http\Controllers\UserController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -31,4 +25,4 @@ Route::post('register', [UserController::class, 'register']);
 
 Route::apiResource('users', UserController::class);
 Route::apiResource('cars', CarController::class);
-Route::apiResource('transactions', TransactionController::class);
+Route::apiResource('rentals', RentalController::class);

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CarController;
+use App\Http\Controllers\RentalController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
@@ -27,12 +28,8 @@ Route::get('/home', function () {
     return view('pages.home');
 })->middleware('auth');
 
-Route::get('/rents', [TransactionController::class, 'index'])->name('rents');
 
-Route::get('/cars', [CarController::class, 'index'])->name('cars');
-Route::get('/cars/create', [CarController::class, 'create'])->name('cars.create');
-Route::get('/cars/edit/{id}', [CarController::class, 'edit'])->name('cars.edit');
-Route::put('/cars/update/{id}', [CarController::class, 'update'])->name('cars.update');
-Route::delete('/cars/delete/{id}', [CarController::class, 'delete'])->name('cars.delete');
+Route::resource('rents', RentalController::class);
+Route::resource('cars', CarController::class);
 
 
