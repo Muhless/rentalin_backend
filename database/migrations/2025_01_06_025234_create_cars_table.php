@@ -17,9 +17,6 @@ return new class extends Migration
             $table->string('brand');
             $table->string('model');
             $table->string('image_url')->nullable();
-            $table->string('plate_number')->nullable();
-            $table->year('year')->nullable();
-            $table->string('color')->nullable();
             $table->integer('price');
             $table->string('status');
             $table->string('capacity')->nullable();

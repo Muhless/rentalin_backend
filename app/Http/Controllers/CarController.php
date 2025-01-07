@@ -8,17 +8,26 @@ use Illuminate\Support\Facades\Storage;
 
 class CarController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $cars = Car::all();
+        $search = $request->input('search');
+        if ($search) {
+            $cars = Car::where('brand', 'like', '%' . $search . '%')
+                ->orWhere('model', 'like', '%' . $search . '%')
+                ->orWhere('category', 'like', '%' . $search . '%')
+                ->orWhere('price', 'like', '%' . $search . '%')
+                ->get();
+        } else {
+            $cars = Car::all();
+        }
         return view('pages.cars.index', compact('cars'));
     }
 
     public function show($id)
-{
-    $car = Car::findOrFail($id);
-    return view('pages.cars.detail', compact('car'));
-}
+    {
+        $car = Car::findOrFail($id);
+        return view('pages.cars.detail', compact('car'));
+    }
 
 
     public function create()
@@ -34,10 +43,7 @@ class CarController extends Controller
             'model' => 'required|string|max:50',
             'image_url' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:5120',
             'price' => 'required|numeric',
-            'status' => 'required|string|max:50',
-            'plate_number' => 'nullable|string|max:20',
-            'year' => 'nullable|year',
-            'color' => 'nullable|string|max:50',
+            // 'status' => 'required|string|max:50',
             'capacity' => 'nullable|string|max:50',
             'transmission' => 'nullable|string|max:50',
             'luggage_capacity' => 'nullable|string|max:50',
@@ -57,10 +63,7 @@ class CarController extends Controller
             'model' => $request->model,
             'image_url' => $imagePath,
             'price' => $request->price,
-            'status' => $request->status,
-            'plate_number' => $request->plate_number,
-            'year' => $request->year,
-            'color' => $request->color,
+            // 'status' => $request->status,
             'capacity' => $request->capacity,
             'transmission' => $request->transmission,
             'luggage_capacity' => $request->luggage_capacity,
@@ -86,9 +89,6 @@ class CarController extends Controller
             'image_url' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:5120',
             'price' => 'required|numeric',
             'status' => 'required|string|max:50',
-            'plate_number' => 'nullable|string|max:20',
-            'year' => 'nullable|year',
-            'color' => 'nullable|string|max:50',
             'capacity' => 'nullable|string|max:50',
             'transmission' => 'nullable|string|max:50',
             'luggage_capacity' => 'nullable|string|max:50',
@@ -117,9 +117,6 @@ class CarController extends Controller
             'image_url' => $car->image_url,
             'price' => $request->price,
             'status' => $request->status,
-            'plate_number' => $request->plate_number,
-            'year' => $request->year,
-            'color' => $request->color,
             'capacity' => $request->capacity,
             'transmission' => $request->transmission,
             'luggage_capacity' => $request->luggage_capacity,
@@ -127,7 +124,7 @@ class CarController extends Controller
             'fuel_consumption' => $request->fuel_consumption,
         ]);
 
-        return redirect()->route('cars.index')->with('success', 'Mobil berhasil diperbarui!');
+        return redirect()->route('cars.show', ['id' => $car->id])->with('success', 'Mobil berhasil diperbarui!');
     }
 
     public function destroy($id)

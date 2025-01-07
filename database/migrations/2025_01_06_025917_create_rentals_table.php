@@ -19,9 +19,9 @@ return new class extends Migration
             $table->date('rent_date');
             $table->date('return_date');
             $table->integer('rent_duration');
-            $table->string('payment');  // Payment method (could be 'Credit Card', 'Cash', etc.)
-            $table->integer('total');  // Total rental cost
-            $table->timestamps();  // Created and updated timestamps
+            $table->string('payment');
+            $table->integer('total');
+            $table->timestamps(); 
         });
     }
 

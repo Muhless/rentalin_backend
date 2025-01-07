@@ -26,8 +26,8 @@
             <div>
                 <label for="username" class="block text-sm font-medium text-gray-700">Username</label>
                 <input type="text" id="username" name="username"
-                       class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-                       placeholder="Enter your username" required>
+                       class="mt-1 h-10 block w-full border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                       placeholder="Masukkan username" required>
                 @error('username')
                     <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
                 @enderror
@@ -36,8 +36,8 @@
             <div>
                 <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
                 <input type="password" id="password" name="password"
-                       class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-                       placeholder="Enter your password" required>
+                       class="mt-1 block w-full h-10 border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                       placeholder="Masukkan Password" required>
                 @error('password')
                     <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
                 @enderror
