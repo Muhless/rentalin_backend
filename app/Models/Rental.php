@@ -20,9 +20,15 @@ class Rental extends Model
         'return_date',
         'rent_duration',
         'payment',
-        'total'
+        'total',
+        'keterangan'
     ];
 
+    protected $casts = [
+        'rent_date' => 'datetime',
+        'return_date' => 'datetime',
+    ];
+    
     public function user()
     {
         return $this->belongsTo(User::class);

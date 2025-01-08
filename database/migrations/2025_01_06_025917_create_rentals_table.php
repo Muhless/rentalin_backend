@@ -19,9 +19,10 @@ return new class extends Migration
             $table->date('rent_date');
             $table->date('return_date');
             $table->integer('rent_duration');
-            $table->string('payment');
+            $table->string('payment')->default('cash');
             $table->integer('total');
-            $table->timestamps(); 
+            $table->string('keterangan');
+            $table->timestamps();
         });
     }
 

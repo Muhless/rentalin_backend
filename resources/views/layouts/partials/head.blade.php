@@ -4,5 +4,5 @@
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         @vite('resources/css/app.css')
         <title>@yield('title')</title>
-        <link rel="icon" type="image/png" href="{{ asset('public/images/logo.png') }}">
+        <link rel="icon" type="image/png" href="{{ asset('images/logo.png') }}">
     </head>

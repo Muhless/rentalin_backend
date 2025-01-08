@@ -11,14 +11,13 @@ class RentalController extends Controller
     // Display all rentals
     public function index()
     {
-        $rentals = Rental::with(['user', 'car'])->get();  // Eager load relationships
+        $rentals = Rental::with(['user', 'car'])->get();
         return response()->json($rentals);
     }
 
-    // Show a single rental record
     public function show($id)
     {
-        $rental = Rental::with(['user', 'car'])->findOrFail($id);  // Find rental by ID and load relationships
+        $rental = Rental::with(['user', 'car'])->findOrFail($id);  
         return response()->json($rental);
     }
 

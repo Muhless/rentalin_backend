@@ -2,20 +2,22 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasFactory, Notifiable;
 
-    protected $fillable = ['username', 'phone', 'password'];
-
-    protected $hidden = [
+    protected $fillable = [
+        'username',
+        'phone',
         'password',
-        'remember_token',
     ];
 
+    public function rentals()
+    {
+        return $this->hasMany(Rental::class);
+    }
 }

@@ -9,13 +9,14 @@
         <li class="mb-3">
             <a href="/home"
                 class="block text-black text-base p-2 rounded hover:bg-blue-600 hover:text-white transition">
-                Dashboard
+                Halaman Awal
             </a>
         </li>
-        <li class="mb-3">
-            <a href="rents"
+        </li>
+            <li class="mb-3">
+            <a href="/users"
                 class="block text-black text-base p-2 rounded hover:bg-blue-600 hover:text-white transition">
-                Rental
+                Akun
             </a>
         </li>
         <li class="mb-3">
@@ -24,14 +25,36 @@
                 Mobil
             </a>
         </li>
+        <li class="mb-3">
+            <a href="/rentals"
+                class="block text-black text-base p-2 rounded hover:bg-blue-600 hover:text-white transition">
+                Rental
+            </a>
+        </li>
+        <li class="mb-3">
+            <a href="/rentals"
+                class="block text-black text-base p-2 rounded hover:bg-blue-600 hover:text-white transition">
+                Transaksi
+            </a>
         <li>
-            <form action="/logout" method="POST" class="m-0">
+            <form action="/logout" method="POST" class="m-0" onsubmit="return confirmLogout(event)">
                 @csrf
                 <button type="submit"
                     class="w-full text-left bg-none border-none text-black text-base p-2 rounded hover:bg-red-600 hover:text-white transition">
                     Logout
                 </button>
             </form>
+
+            <script>
+                function confirmLogout(event) {
+                    const confirmed = confirm("Apakah Anda yakin ingin keluar dari akun ini?");
+                    if (!confirmed) {
+                        event.preventDefault();
+                    }
+                    return confirmed;
+                }
+            </script>
+
         </li>
     </ul>
 </div>

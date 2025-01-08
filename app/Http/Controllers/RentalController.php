@@ -9,68 +9,86 @@ use Illuminate\Http\Request;
 
 class RentalController extends Controller
 {
-    // Display all rentals
     public function index()
     {
-        $rentals = Rental::with(['user', 'car'])->get();  // Eager load relationships
-        return response()->json($rentals);
+        $rentals = Rental::with(['user', 'car'])->get();
+        $rentals = Rental::orderBy('created_at', 'desc')->get();
+        return view('pages.rentals.index', compact('rentals'));
     }
 
-    // Show a single rental record
-    public function show($id)
+    public function create()
     {
-        $rental = Rental::with(['user', 'car'])->findOrFail($id);  // Find rental by ID and load relationships
-        return response()->json($rental);
+        $users = User::all();
+        $cars = Car::where('status', 'Tersedia')->get();
+        return view('rentals.create', compact('users', 'cars'));
     }
 
-    // Store a new rental record
     public function store(Request $request)
     {
-        // Validate incoming request data
-        $request->validate([
+        $validated = $request->validate([
             'user_id' => 'required|exists:users,id',
             'car_id' => 'required|exists:cars,id',
             'rent_date' => 'required|date',
-            'return_date' => 'required|date',
-            'rent_duration' => 'required|integer',
+            'return_date' => 'required|date|after_or_equal:rent_date',
+            'rent_duration' => 'required|integer|min:1',
             'payment' => 'required|string',
-            'total' => 'required|integer'
+            'total' => 'required|integer|min:0',
+            'keterangan' => 'required|string|max:255',
         ]);
 
-        // Create a new rental record
-        $rental = Rental::create($request->all());
+        Rental::create($validated);
 
-        return response()->json($rental, 201);  // Return the newly created rental
+        Car::where('id', $validated['car_id'])->update(['status' => 'Tidak Tersedia']);
+
+        return redirect()->route('rentals.index')->with('success', 'Rental berhasil ditambahkan.');
     }
 
-    // Update an existing rental record
-    public function update(Request $request, $id)
+    public function edit(Rental $rental)
     {
-        $rental = Rental::findOrFail($id);
+        $users = User::all();
+        $cars = Car::all();
+        return view('pages.rentals.edit', compact('rental', 'users', 'cars'));
+    }
 
-        // Validate incoming data
-        $request->validate([
+    public function update(Request $request, Rental $rental)
+    {
+        $validated = $request->validate([
             'user_id' => 'required|exists:users,id',
             'car_id' => 'required|exists:cars,id',
             'rent_date' => 'required|date',
-            'return_date' => 'required|date',
-            'rent_duration' => 'required|integer',
+            'return_date' => 'required|date|after_or_equal:rent_date',
+            'rent_duration' => 'required|integer|min:1',
             'payment' => 'required|string',
-            'total' => 'required|integer'
+            'total' => 'required|integer|min:0',
+            'keterangan' => 'required|string|max:255',
         ]);
 
-        // Update rental record
-        $rental->update($request->all());
+        $rental->update($validated);
 
-        return response()->json($rental);  // Return the updated rental
+        return redirect()->route('rentals.index')->with('success', 'Rental berhasil diperbarui.');
     }
 
-    // Delete a rental record
-    public function destroy($id)
+    public function destroy(Rental $rental)
     {
-        $rental = Rental::findOrFail($id);
+        if ($rental->car) {
+            $rental->car->update(['status' => 'Tersedia']);
+        } else {
+            return back()->with('error', 'Mobil tidak ditemukan.');
+        }
         $rental->delete();
-
-        return response()->json(['message' => 'Rental deleted successfully']);
+        return redirect()->route('rentals.index')->with('success', 'Data Rental berhasil dihapus.');
     }
+
+    public function updateStatus(Request $request, Rental $rental)
+    {
+        $validated = $request->validate([
+            'keterangan' => 'required|string|in:Belum Disetujui,Disetujui,Ditolak',
+        ]);
+        $rental->update([
+            'keterangan' => $validated['keterangan'],
+        ]);
+
+        return back()->with('success', 'Keterangan rental berhasil diubah.');
+    }
+
 }

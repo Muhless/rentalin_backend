@@ -4,10 +4,10 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Laravel\Sanctum\HasApiTokens;
 
 class UserController extends Controller
 {
@@ -16,32 +16,25 @@ class UserController extends Controller
         $rules = [
             'username' => 'required|string|max:50|unique:users,username',
             'phone' => 'required|string|max:15|unique:users,phone',
-            'password' => 'required|string|min:8|confirmed',
+            'password' => 'required|string|min:8',
         ];
-
         $validator = Validator::make($request->all(), $rules);
-
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 400);
         }
-
         try {
             $user = User::create([
                 'username' => $request->username,
                 'phone' => $request->phone,
                 'password' => Hash::make($request->password),
             ]);
-
-            $token = $user->createToken('personal access token')->plainTextToken;
-
-            $response = [
+            $token = $user->createToken('Personal Access Token')->plainTextToken;
+            return response()->json([
                 'user' => $user,
                 'token' => $token,
-            ];
-
-            return response()->json($response, 201);
-        } catch (Exception $e) {
-            return response()->json(['error' => 'Something went wrong. Please try again later.'], 500);
+            ], 201);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Registration failed. Please try again later.'], 500);
         }
     }
 
@@ -53,23 +46,18 @@ class UserController extends Controller
         ];
 
         $validator = Validator::make($request->all(), $rules);
-
         if ($validator->fails()) {
-            return redirect('/login')
-                ->withErrors($validator)
-                ->withInput();
+            return response()->json(['error' => 'Validation failed. Missing username or password.'], 400);
         }
-
         $user = User::where('username', $request->username)->first();
-
         if (!$user || !Hash::check($request->password, $user->password)) {
-            return redirect('/login')->withErrors([
-                'login' => 'Invalid username or password.',
-            ]);
+            return response()->json(['error' => 'Invalid username or password'], 401);
         }
-
-        auth()->login($user);
-
-        return redirect('/home');
+        $token = $user->createToken('Personal Access Token')->plainTextToken;
+        return response()->json([
+            'message' => 'Login berhasil',
+            'user' => $user,
+            'token' => $token,
+        ], 200);
     }
 }

@@ -2,8 +2,8 @@
 @section('title', 'Daftar Mobil')
 
 @section('content')
-    <div class="content">
-        <h1 class="mb-2 text-3xl font-bold">Daftar Mobil</h1>
+    <div class="content p-6">
+        <h1 class="text-3xl font-bold mb-4">Daftar Mobil</h1>
         <form action="{{ route('cars.create') }}" method="GET" class="mb-5">
             <button type="submit"
                 class="bg-blue-600 text-white py-2 px-6 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
