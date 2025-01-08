@@ -31,9 +31,9 @@ class RentalController extends Controller
             'rent_date' => 'required|date',
             'return_date' => 'required|date|after_or_equal:rent_date',
             'rent_duration' => 'required|integer|min:1',
-            'payment' => 'required|string',
+            'driver' => 'required|string',
             'total' => 'required|integer|min:0',
-            'keterangan' => 'required|string|max:255',
+            'status' => 'required|string',
         ]);
 
         Rental::create($validated);
@@ -58,9 +58,9 @@ class RentalController extends Controller
             'rent_date' => 'required|date',
             'return_date' => 'required|date|after_or_equal:rent_date',
             'rent_duration' => 'required|integer|min:1',
-            'payment' => 'required|string',
+            'driver' => 'required|string',
             'total' => 'required|integer|min:0',
-            'keterangan' => 'required|string|max:255',
+            'status' => 'required|string',
         ]);
 
         $rental->update($validated);
@@ -82,13 +82,12 @@ class RentalController extends Controller
     public function updateStatus(Request $request, Rental $rental)
     {
         $validated = $request->validate([
-            'keterangan' => 'required|string|in:Belum Disetujui,Disetujui,Ditolak',
+            'status' => 'required|string|in:Belum Disetujui,Disetujui,Ditolak',
         ]);
         $rental->update([
-            'keterangan' => $validated['keterangan'],
+            'status' => $validated['status'],
         ]);
 
-        return back()->with('success', 'Keterangan rental berhasil diubah.');
+        return back()->with('success', 'status rental berhasil diubah.');
     }
-
 }

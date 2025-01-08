@@ -11,26 +11,19 @@ return new class extends Migration
         Schema::create('rentals', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')
-                ->constrained('users')
-                ->onDelete('cascade');
+                ->constrained('users');
             $table->foreignId('car_id')
-                ->constrained('cars')
-                ->onDelete('cascade');
+                ->constrained('cars');
             $table->date('rent_date');
             $table->date('return_date');
             $table->integer('rent_duration');
-            $table->string('payment')->default('cash');
+            $table->string('driver')->default('tidak');
             $table->integer('total');
-            $table->string('keterangan');
+            $table->string('status');
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down(): void
     {
         Schema::dropIfExists('rentals');

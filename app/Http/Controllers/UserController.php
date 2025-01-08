@@ -47,63 +47,7 @@ class UserController extends Controller
         return view('pages.users.index', compact('users'));
     }
 
-    /**
-     * Menampilkan form untuk menambahkan pengguna baru.
-     */
-    public function create()
-    {
-        return view('users.create');
-    }
 
-    /**
-     * Menyimpan pengguna baru.
-     */
-    public function store(Request $request)
-    {
-        $validated = $request->validate([
-            'username' => 'required|string|max:255',
-            'phone' => 'required|string|max:15|unique:users',
-            'password' => 'required|string|min:8|confirmed',
-        ]);
-
-        $validated['password'] = bcrypt($validated['password']); // Encrypt password
-
-        User::create($validated);
-
-        return redirect()->route('users.index')->with('success', 'Pengguna berhasil ditambahkan.');
-    }
-
-    /**
-     * Menampilkan form untuk mengedit pengguna.
-     */
-    public function edit(User $user)
-    {
-        return view('users.edit', compact('user'));
-    }
-
-    /**
-     * Memperbarui data pengguna.
-     */
-    public function update(Request $request, User $user)
-    {
-        $validated = $request->validate([
-            'username' => 'required|string|max:255',
-            'phone' => 'required|string|max:15|unique:users,phone,' . $user->id,
-            'password' => 'nullable|string|min:8|confirmed',
-        ]);
-
-        if ($request->has('password')) {
-            $validated['password'] = bcrypt($validated['password']);
-        }
-
-        $user->update($validated);
-
-        return redirect()->route('users.index')->with('success', 'Pengguna berhasil diperbarui.');
-    }
-
-    /**
-     * Menghapus pengguna.
-     */
     public function destroy(User $user)
     {
         $user->delete();

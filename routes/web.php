@@ -29,14 +29,14 @@ Route::get('/home', function () {
 })->middleware('auth');
 
 
-Route::get('/rentals', [RentalController::class, 'index'])->name('rentals.index');
-Route::get('/rentals/create', [RentalController::class, 'create'])->name('rentals.create');
-Route::get('rentals/{id}', [RentalController::class, 'show'])->name('rentals.show');
-Route::post('/rentals', [RentalController::class, 'store'])->name('rentals.store');
-Route::get('/rentals/{id}/edit', [RentalController::class, 'edit'])->name('rentals.edit');
-Route::put('/rentals/{id}', [RentalController::class, 'update'])->name('rentals.update');
-Route::delete('/rentals/{id}', [RentalController::class, 'destroy'])->name('rentals.destroy');
-Route::patch('rentals/{rental}/updateStatus', [RentalController::class, 'updateStatus'])->name('rentals.updateStatus');
+Route::get('/users', [UserController::class, 'index'])->name('users.index');
+Route::get('/users/create', [UserController::class, 'create'])->name('users.create');
+Route::get('users/{id}', [UserController::class, 'show'])->name('users.show');
+Route::post('/users', [UserController::class, 'store'])->name('users.store');
+Route::get('/users/{id}/edit', [UserController::class, 'edit'])->name('users.edit');
+Route::put('/users/{id}', [UserController::class, 'update'])->name('users.update');
+Route::delete('/users/{id}', [UserController::class, 'destroy'])->name('users.destroy');
+
 
 
 Route::get('/cars', [CarController::class, 'index'])->name('cars.index');
@@ -47,10 +47,23 @@ Route::get('/cars/{id}/edit', [CarController::class, 'edit'])->name('cars.edit')
 Route::put('/cars/{id}', [CarController::class, 'update'])->name('cars.update');
 Route::delete('/cars/{id}', [CarController::class, 'destroy'])->name('cars.destroy');
 
-Route::get('/users', [UserController::class, 'index'])->name('users.index');
-Route::get('/users/create', [UserController::class, 'create'])->name('users.create');
-Route::get('users/{id}', [UserController::class, 'show'])->name('users.show');
-Route::post('/users', [UserController::class, 'store'])->name('users.store');
-Route::get('/users/{id}/edit', [UserController::class, 'edit'])->name('users.edit');
-Route::put('/users/{id}', [UserController::class, 'update'])->name('users.update');
-Route::delete('/users/{id}', [UserController::class, 'destroy'])->name('users.destroy');
+
+Route::get('/rentals', [RentalController::class, 'index'])->name('rentals.index');
+Route::get('/rentals/create', [RentalController::class, 'create'])->name('rentals.create');
+Route::get('rentals/{id}', [RentalController::class, 'show'])->name('rentals.show');
+Route::post('/rentals', [RentalController::class, 'store'])->name('rentals.store');
+Route::get('/rentals/{id}/edit', [RentalController::class, 'edit'])->name('rentals.edit');
+Route::put('/rentals/{id}', [RentalController::class, 'update'])->name('rentals.update');
+Route::delete('/rentals/{id}', [RentalController::class, 'destroy'])->name('rentals.destroy');
+Route::patch('/rentals/{rental}/updateStatus', [RentalController::class, 'updateStatus'])->name('rentals.updateStatus');
+
+
+
+Route::get('/transactions', [TransactionController::class, 'index'])->name('transactions.index');
+Route::get('/transactions/create', [TransactionController::class, 'create'])->name('transactions.create');
+Route::get('transactions/{id}', [TransactionController::class, 'show'])->name('transactions.show');
+Route::post('/transactions', [TransactionController::class, 'store'])->name('transactions.store');
+Route::get('/transactions/{id}/edit', [TransactionController::class, 'edit'])->name('transactions.edit');
+Route::put('/transactions/{id}', [TransactionController::class, 'update'])->name('transactions.update');
+Route::delete('/transactions/{id}', [TransactionController::class, 'destroy'])->name('transactions.destroy');
+Route::patch('/transactions/{rental}/updateStatus', [TransactionController::class, 'updateStatus'])->name('transactions.updateStatus');

@@ -9,26 +9,23 @@ class Rental extends Model
 {
     use HasFactory;
 
-    // Define the table name (optional if it follows the plural convention)
     protected $table = 'rentals';
-
-    // Specify fillable attributes for mass assignment
     protected $fillable = [
         'user_id',
         'car_id',
         'rent_date',
         'return_date',
         'rent_duration',
-        'payment',
+        'driver',
         'total',
-        'keterangan'
+        'status'
     ];
 
     protected $casts = [
         'rent_date' => 'datetime',
         'return_date' => 'datetime',
     ];
-    
+
     public function user()
     {
         return $this->belongsTo(User::class);

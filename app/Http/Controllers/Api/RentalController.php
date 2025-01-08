@@ -8,7 +8,6 @@ use Illuminate\Http\Request;
 
 class RentalController extends Controller
 {
-    // Display all rentals
     public function index()
     {
         $rentals = Rental::with(['user', 'car'])->get();
@@ -17,7 +16,7 @@ class RentalController extends Controller
 
     public function show($id)
     {
-        $rental = Rental::with(['user', 'car'])->findOrFail($id);  
+        $rental = Rental::with(['user', 'car'])->findOrFail($id);
         return response()->json($rental);
     }
 

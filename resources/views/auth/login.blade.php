@@ -7,6 +7,7 @@
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <title>Halaman Login</title>
         <script src="https://cdn.tailwindcss.com"></script>
+        <link rel="icon" type="image/png" href="{{ asset('images/logo.png') }}">
     </head>
 
     <body class="bg-gray-100 flex items-center justify-center min-h-screen">

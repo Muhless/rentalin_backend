@@ -32,7 +32,7 @@
             </a>
         </li>
         <li class="mb-3">
-            <a href="/rentals"
+            <a href="/transactions"
                 class="block text-black text-base p-2 rounded hover:bg-blue-600 hover:text-white transition">
                 Transaksi
             </a>
