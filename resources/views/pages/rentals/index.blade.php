@@ -17,7 +17,6 @@
                     <th class="py-3 px-5 border text-center">Driver</th>
                     <th class="py-3 px-5 border text-center">Total</th>
                     <th class="py-3 px-5 border text-center">Keterangan</th>
-                    {{-- <th class="py-3 px-5 border text-center">Aksi</th> --}}
                 </tr>
             </thead>
             <tbody class="text-gray-700">
@@ -30,7 +29,7 @@
                         <td class="py-1 px-5 border text-center">{{ $rental->return_date?->isoFormat('DD MMMM Y') }}</td>
                         <td class="py-1 px-5 border text-center">{{ $rental->rent_duration }} hari</td>
                         <td class="py-1 px-5 border text-center">{{ $rental->driver }}</td>
-                        <td class="py-1 px-5 border text-center">Rp. {{ number_format($rental->total, 0, ',', '.') }}</td>
+                        <td class="py-1 px-5 border text-end">Rp. {{ number_format($rental->total, 0, ',', '.') }}</td>
                         <td
                             class="py-1 text-center
                             @if ($rental->status === 'Belum Disetujui') bg-blue-200

@@ -42,10 +42,11 @@ class UserController extends Controller
     }
 
     public function index()
-    {
-        $users = User::all();
-        return view('pages.users.index', compact('users'));
-    }
+{
+    $users = User::orderBy('created_at', 'desc')->get(); 
+    return view('pages.users.index', compact('users'));
+}
+
 
 
     public function destroy(User $user)

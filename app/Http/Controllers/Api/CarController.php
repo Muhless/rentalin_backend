@@ -10,9 +10,10 @@ class CarController extends Controller
 {
     public function index()
     {
-        $cars = Car::all();
+        $cars = Car::where('status', 'Tersedia')->get();
         return response()->json($cars);
     }
+
 
     public function show($id)
     {
@@ -84,5 +85,3 @@ class CarController extends Controller
         return response()->json(['message' => 'Car deleted successfully']);
     }
 }
-
-?>

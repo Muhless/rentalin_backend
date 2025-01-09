@@ -16,6 +16,7 @@
                     <th class="py-3 px-2 border text-center">Keterlambatan</th>
                     <th class="py-3 px-10 border text-center">Denda</th>
                     <th class="py-3 px-10 border text-center">Total</th>
+                    <th class="py-3 px-2 border text-center">Detail</th>
                     <th class="py-3 px-2 border text-center">Keterangan</th>
                 </tr>
             </thead>
@@ -33,16 +34,20 @@
                             {{ \Carbon\Carbon::parse($transaction->actual_return_date)->isoformat('DD MMMM Y') ?? '-' }}
                         </td>
                         <td class="py-3 px-2 border text-center">{{ $transaction->late_days }} hari</td>
-                        <td class="py-3 px-2 border text-center">Rp.
+                        <td class="py-3 px-2 border text-end">Rp.
                             {{ number_format($transaction->penalty_fee, 0, ',', '.') }}</td>
-                        <td class="py-3 px-2 border text-center">Rp.
-                            {{ number_format($transaction->total, 0, ',', '.') }}</td>
+                        <td class="py-3 px-2 border text-end">Rp.
+                            {{ number_format($transaction->rental->total, 0, ',', '.') }}</td>
+                        <td class="py-3 px-2 border text-center">
+                            <a href="{{ route('transactions.show', $transaction->id) }}"
+                                class="text-blue-500 hover:underline">lihat</a>
+                        </td>
                         <td
                             class="text-center bg-blue-200
                             @if ($transaction->status === 'Sedang Berlangsung') bg-blue-200
                             @elseif ($transaction->status === 'Selesai') bg-green-200
                             @elseif ($transaction->status === 'Dibatalkan') bg-red-200 @endif text-black">
-                            <form action="{{ route('transactions.updateStatus', $transaction->id) }}" method="POST">
+                            <form action="{{ route('transactions.update', $transaction->id) }}" method="POST">
                                 @csrf
                                 @method('PATCH')
                                 @if ($transaction->status === 'Selesai' || $transaction->status === 'Dibatalkan')

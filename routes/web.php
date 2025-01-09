@@ -60,10 +60,5 @@ Route::patch('/rentals/{rental}/updateStatus', [RentalController::class, 'update
 
 
 Route::get('/transactions', [TransactionController::class, 'index'])->name('transactions.index');
-Route::get('/transactions/create', [TransactionController::class, 'create'])->name('transactions.create');
-Route::get('transactions/{id}', [TransactionController::class, 'show'])->name('transactions.show');
-Route::post('/transactions', [TransactionController::class, 'store'])->name('transactions.store');
-Route::get('/transactions/{id}/edit', [TransactionController::class, 'edit'])->name('transactions.edit');
-Route::put('/transactions/{id}', [TransactionController::class, 'update'])->name('transactions.update');
-Route::delete('/transactions/{id}', [TransactionController::class, 'destroy'])->name('transactions.destroy');
-Route::patch('/transactions/{rental}/updateStatus', [TransactionController::class, 'updateStatus'])->name('transactions.updateStatus');
+Route::get('/transactions/{id}', [TransactionController::class, 'show'])->name('transactions.show');
+Route::patch('/transactions/{transaction}/update', [TransactionController::class, 'update'])->name('transactions.update');

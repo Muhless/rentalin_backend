@@ -21,6 +21,10 @@ class Rental extends Model
         'status'
     ];
 
+    protected $attributes = [
+        'status' => 'Menunggu persetujuan',
+    ];
+
     protected $casts = [
         'rent_date' => 'datetime',
         'return_date' => 'datetime',

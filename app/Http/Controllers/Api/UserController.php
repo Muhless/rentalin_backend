@@ -11,31 +11,51 @@ use Illuminate\Support\Facades\Validator;
 class UserController extends Controller
 {
     public function register(Request $request)
-    {
-        $rules = [
-            'username' => 'required|string|max:50|unique:users,username',
-            'phone' => 'required|string|max:15|unique:users,phone',
-            'password' => 'required|string|min:8',
-        ];
-        $validator = Validator::make($request->all(), $rules);
-        if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 400);
-        }
-        try {
-            $user = User::create([
-                'username' => $request->username,
-                'phone' => $request->phone,
-                'password' => Hash::make($request->password),
-            ]);
-            $token = $user->createToken('Personal Access Token')->plainTextToken;
-            return response()->json([
+{
+    $rules = [
+        'username' => 'required|string|max:50|unique:users,username',
+        'phone' => 'required|string|max:15|unique:users,phone',
+        'password' => 'required|string|min:8',
+    ];
+
+    $validator = Validator::make($request->all(), $rules);
+
+    if ($validator->fails()) {
+        return response()->json([
+            'success' => false,
+            'message' => 'Validation errors',
+            'errors' => $validator->errors()
+        ], 400);
+    }
+
+    try {
+        // Buat user baru
+        $user = User::create([
+            'username' => $request->username,
+            'phone' => $request->phone,
+            'password' => Hash::make($request->password),
+        ]);
+
+        // Generate token akses personal
+        $token = $user->createToken('Personal Access Token')->plainTextToken;
+
+        return response()->json([
+            'success' => true,
+            'message' => 'User registered successfully',
+            'data' => [
                 'user' => $user,
                 'token' => $token,
-            ], 201);
-        } catch (\Exception $e) {
-            return response()->json(['error' => 'Registration failed. Please try again later.'], 500);
-        }
+            ]
+        ], 201);
+    } catch (\Exception $e) {
+        return response()->json([
+            'success' => false,
+            'message' => 'Registration failed. Please try again later.',
+            'error' => $e->getMessage() 
+        ], 500);
     }
+}
+
 
     public function login(Request $request)
     {
