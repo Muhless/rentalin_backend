@@ -9,11 +9,48 @@ use Illuminate\Http\Request;
 
 class RentalController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $rentals = Rental::with(['user', 'car'])->get();
-        $rentals = Rental::orderBy('created_at', 'desc')->get();
+        $query = Rental::with(['user', 'car'])->orderBy('created_at', 'desc');
+
+        if ($request->has('search') && $request->search != '') {
+            $search = $request->search;
+            $query->whereHas('user', function ($q) use ($search) {
+                $q->where('username', 'like', '%' . $search . '%');
+            })->orWhereHas('car', function ($q) use ($search) {
+                $q->where('brand', 'like', '%' . $search . '%')
+                    ->orWhere('model', 'like', '%' . $search . '%');
+            })->orWhere('status', 'like', '%' . $search . '%');
+        }
+
+        if ($request->has('rent_date') && $request->rent_date != '') {
+            $query->whereDate('rent_date', $request->rent_date);
+        }
+
+        $rentals = $query->get();
         return view('pages.rentals.index', compact('rentals'));
+    }
+
+    public function indexed(Request $request)
+    {
+        $query = Rental::with(['user', 'car'])->orderBy('created_at', 'desc');
+        $query->where('status', 'Selesai');
+        if ($request->has('search') && $request->search != '') {
+            $search = $request->search;
+            $query->whereHas('user', function ($q) use ($search) {
+                $q->where('username', 'like', '%' . $search . '%');
+            })->orWhereHas('car', function ($q) use ($search) {
+                $q->where('brand', 'like', '%' . $search . '%')
+                    ->orWhere('model', 'like', '%' . $search . '%');
+            })->orWhere('status', 'like', '%' . $search . '%');
+        }
+
+        if ($request->has('rent_date') && $request->rent_date != '') {
+            $query->whereDate('rent_date', $request->rent_date);
+        }
+
+        $rentals = $query->get();
+        return view('pages.returns.index', compact('rentals'));
     }
 
     public function create()
@@ -87,6 +124,13 @@ class RentalController extends Controller
         $rental->update([
             'status' => $validated['status'],
         ]);
+
+        if ($validated['status'] === 'Disetujui') {
+            $car = $rental->car;
+            if ($car) {
+                $car->update(['status' => 'Tidak Tersedia']);
+            }
+        }
 
         return back()->with('success', 'status rental berhasil diubah.');
     }

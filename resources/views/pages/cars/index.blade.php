@@ -12,7 +12,7 @@
         </form>
         <form action="{{ route('cars.index') }}" method="GET" class="mb-5">
             <div class="flex items-center space-x-4">
-                <input type="text" name="search" value="{{ request()->query('search') }}" placeholder="Cari mobil..."
+                <input type="text" name="search" value="{{ request()->query('search') }}" placeholder="Cari mobil"
                     class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
                 @if (request()->query('search'))
                     <a href="{{ route('cars.index') }}"

@@ -10,7 +10,7 @@ class RentalController extends Controller
 {
     public function index()
     {
-        $rentals = Rental::with(['user', 'car'])->get();
+        $rentals = Rental::with(['user', 'car'])->orderBy('created_at', 'desc')->get();
         return response()->json($rentals);
     }
 
@@ -23,13 +23,13 @@ class RentalController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'user_id' => 'required|exists:users,id',
-            'car_id' => 'required|exists:cars,id',
-            'rent_date' => 'required|date',
-            'return_date' => 'required|date',
-            'rent_duration' => 'required|integer',
-            'driver' => 'required|string',
-            'total' => 'required|integer'
+            'user_id' => 'exists:users,id',
+            'car_id' => 'exists:cars,id',
+            'rent_date' => 'date',
+            'return_date' => 'date',
+            'rent_duration' => 'integer',
+            'driver' => 'string',
+            'total' => 'integer'
         ]);
 
         $rental = Rental::create($request->all());
@@ -42,13 +42,13 @@ class RentalController extends Controller
         $rental = Rental::findOrFail($id);
 
         $request->validate([
-            'user_id' => 'required|exists:users,id',
-            'car_id' => 'required|exists:cars,id',
-            'rent_date' => 'required|date',
-            'return_date' => 'required|date',
-            'rent_duration' => 'required|integer',
-            'driver' => 'required|string',
-            'total' => 'required|integer'
+            'user_id' => 'exists:users,id',
+            'car_id' => 'exists:cars,id',
+            'rent_date' => 'date',
+            'return_date' => 'date',
+            'rent_duration' => 'integer',
+            'driver' => 'string',
+            'total' => 'integer'
         ]);
 
         $rental->update($request->all());

@@ -18,6 +18,9 @@ class Rental extends Model
         'rent_duration',
         'driver',
         'total',
+        'actual_return_date',
+        'late_days',
+        'penalty_fee',
         'status'
     ];
 
@@ -28,6 +31,7 @@ class Rental extends Model
     protected $casts = [
         'rent_date' => 'datetime',
         'return_date' => 'datetime',
+        'actual_return_date' => 'datetime'
     ];
 
     public function user()

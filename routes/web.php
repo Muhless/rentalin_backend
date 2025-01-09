@@ -59,6 +59,6 @@ Route::patch('/rentals/{rental}/updateStatus', [RentalController::class, 'update
 
 
 
-Route::get('/transactions', [TransactionController::class, 'index'])->name('transactions.index');
-Route::get('/transactions/{id}', [TransactionController::class, 'show'])->name('transactions.show');
-Route::patch('/transactions/{transaction}/update', [TransactionController::class, 'update'])->name('transactions.update');
+Route::get('/returns', [RentalController::class, 'indexed'])->name('returns.index');
+Route::get('/returns/{id}', [RentalController::class, 'show'])->name('returns.show');
+Route::patch('/returns/{transaction}/update', [RentalController::class, 'update'])->name('returns.update');

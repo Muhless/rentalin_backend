@@ -32,9 +32,9 @@
             </a>
         </li>
         <li class="mb-3">
-            <a href="/transactions"
+            <a href="/returns"
                 class="block text-black text-base p-2 rounded hover:bg-blue-600 hover:text-white transition">
-                Transaksi
+                Pengembalian
             </a>
         <li>
             <form action="/logout" method="POST" class="m-0" onsubmit="return confirmLogout(event)">
