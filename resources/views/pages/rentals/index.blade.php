@@ -27,8 +27,8 @@
                     <th class="py-3 px-5 border text-center">No</th>
                     <th class="py-3 px-5 border text-center">Customer</th>
                     <th class="py-3 px-5 border text-center">Mobil</th>
-                    <th class="py-3 px-5 border text-center">Tanggal Sewa</th>
-                    <th class="py-3 px-5 border text-center">Tanggal Pengembalian</th>
+                    <th class="py-3 px-5 border text-center">Tanggal Perentalan</th>
+                    <th class="py-3 px-5 border text-center">Akhir Perentalan</th>
                     <th class="py-3 px-5 border text-center">Durasi</th>
                     <th class="py-3 px-5 border text-center">Driver</th>
                     <th class="py-3 px-5 border text-center">Total</th>

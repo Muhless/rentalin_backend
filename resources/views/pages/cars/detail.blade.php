@@ -54,10 +54,11 @@
 
             <div class="flex justify-end">
                 <form action="{{ route('cars.destroy', ['id' => $car->id]) }}" method="POST"
-                    onsubmit="return confirm('Apakah Anda yakin ingin menghapus data mobil ini?');">
+                    id="delete-form-{{ $car->id }}">
                     @csrf
                     @method('DELETE')
-                    <button type="submit" class="ml-3 w-32 h-10 bg-red-600 text-white rounded-md">
+                    <button type="button" onclick="confirmDelete({{ $car->id }})"
+                        class="ml-3 w-32 h-10 bg-red-600 text-white rounded-md">
                         Hapus
                     </button>
                 </form>
@@ -68,3 +69,23 @@
         </div>
     </div>
 @endsection
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    function confirmDelete(userId) {
+        Swal.fire({
+            title: 'Apakah Anda yakin?',
+            text: "Data ini akan dihapus secara permanen!",
+            icon: 'warning',
+            showCancelButton: true,
+            cancelButtonColor: '#3085d6',
+            confirmButtonColor: '#d33',
+            cancelButtonText: 'Batal',
+            confirmButtonText: 'Ya, hapus!',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                document.getElementById(`delete-form-${userId}`).submit();
+            }
+        });
+    }
+</script>

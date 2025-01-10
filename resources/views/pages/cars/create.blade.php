@@ -2,67 +2,107 @@
 @section('title', 'Tambah Data Mobil')
 
 @section('content')
-    <div class="content bg-white p-5">
-        <form action="{{ route('cars.store') }}" method="POST" enctype="multipart/form-data">
-            @csrf
-            @method('POST')
+    <form action="{{ route('cars.store') }}" method="POST" enctype="multipart/form-data" class="p-5 bg-white">
+        @csrf
 
+        <div class="grid grid-cols-2 gap-4">
+            <!-- Kolom Kiri -->
+            <div>
+                <div class="mb-4">
+                    <label for="category" class="block text-gray-700 mb-2">Kategori</label>
+                    <select name="category" id="category" class="w-full border-gray-300 bg-gray-100 h-10 pl-3 pr-16"
+                        required>
+                        <option value="Family" {{ old('category') == 'Family' ? 'selected' : '' }}>Family</option>
+                        <option value="Commercial" {{ old('category') == 'Commercial' ? 'selected' : '' }}>Commercial</option>
+                        <option value="Luxury" {{ old('category') == 'Luxury' ? 'selected' : '' }}>Luxury</option>
+                    </select>
+                </div>
+
+                <div class="mb-4">
+                    <label for="brand" class="block text-gray-700 mb-2">Brand</label>
+                    <input type="text" id="brand" name="brand" class="w-full border-gray-300 bg-gray-100 h-10 pl-3"
+                        value="{{ old('brand') }}" required>
+                </div>
+
+                <div class="mb-4">
+                    <label for="model" class="block text-gray-700 mb-2">Model</label>
+                    <input type="text" id="model" name="model" class="w-full border-gray-300 bg-gray-100 h-10 pl-3"
+                        value="{{ old('model') }}" required>
+                </div>
+
+                <div class="mb-4">
+                    <label for="price" class="block text-gray-700 mb-2">Harga</label>
+                    <input type="number" id="price" name="price" class="w-full border-gray-300 bg-gray-100 h-10 pl-3"
+                        value="{{ old('price') }}" required>
+                </div>
+
+                <div class="mb-4">
+                    <label for="status" class="block text-gray-700 mb-2">Status</label>
+                    <select name="status" id="status" class="w-full border-gray-300 bg-gray-100 h-10 pl-3" required>
+                        <option value="Tersedia" {{ old('status') == 'Tersedia' ? 'selected' : '' }}>Tersedia</option>
+                        <option value="Tidak Tersedia" {{ old('status') == 'Tidak Tersedia' ? 'selected' : '' }}>Tidak Tersedia</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Kolom Kanan -->
+            <div>
+                <div class="mb-4">
+                    <label for="capacity" class="block text-gray-700 mb-2">Kapasitas Penumpang</label>
+                    <select name="capacity" id="capacity" class="w-full border-gray-300 bg-gray-100 h-10 pl-3 pr-16"
+                        required>
+                        <option value="2 penumpang" {{ old('capacity') == '2 penumpang' ? 'selected' : '' }}>2 Penumpang</option>
+                        <option value="4 penumpang" {{ old('capacity') == '4 penumpang' ? 'selected' : '' }}>4 Penumpang</option>
+                        <option value="6 penumpang" {{ old('capacity') == '6 penumpang' ? 'selected' : '' }}>6 Penumpang</option>
+                        <option value="8 penumpang" {{ old('capacity') == '8 penumpang' ? 'selected' : '' }}>8 Penumpang</option>
+                    </select>
+                </div>
+
+                <div class="mb-4">
+                    <label for="transmission" class="block text-gray-700 mb-2">Transmisi</label>
+                    <select name="transmission" id="transmission" class="w-full border-gray-300 bg-gray-100 h-10 pl-3 pr-16"
+                        required>
+                        <option value="manual" {{ old('transmission') == 'manual' ? 'selected' : '' }}>Manual</option>
+                        <option value="matic" {{ old('transmission') == 'matic' ? 'selected' : '' }}>Matic</option>
+                    </select>
+                </div>
+
+                <div class="mb-4">
+                    <label for="luggage_capacity" class="block text-gray-700 mb-2">Kapasitas Bagasi</label>
+                    <input type="number" id="luggage_capacity" name="luggage_capacity"
+                        class="w-full border-gray-300 bg-gray-100 h-10 pl-3"
+                        value="{{ old('luggage_capacity') }}">
+                </div>
+
+                <div class="mb-4">
+                    <label for="fuel_type" class="block text-gray-700 mb-2">Jenis Bahan Bakar</label>
+                    <select name="fuel_type" id="fuel_type" class="w-full border-gray-300 bg-gray-100 h-10 pl-3 pr-16"
+                        required>
+                        <option value="pertalite" {{ old('fuel_type') == 'pertalite' ? 'selected' : '' }}>Pertalite</option>
+                        <option value="pertamax" {{ old('fuel_type') == 'pertamax' ? 'selected' : '' }}>Pertamax</option>
+                        <option value="diesel" {{ old('fuel_type') == 'diesel' ? 'selected' : '' }}>Diesel</option>
+                    </select>
+                </div>
+
+                <div class="mb-4">
+                    <label for="fuel_consumption" class="block text-gray-700 mb-2">Konsumsi Bahan Bakar</label>
+                    <input type="number" id="fuel_consumption" name="fuel_consumption" class="w-full border-gray-300 bg-gray-100 h-10 pl-3"
+                        value="{{ old('fuel_consumption') }}">
+                </div>
+            </div>
+
+            <!-- Gambar -->
             <div class="mb-4">
-                <label for="brand" class="block mb-2 text-gray-700">Brand</label>
-                <input type="text" name="brand" id="brand" class="w-full h-10 border-gray-300 bg-gray-100 pl-3"
-                    value="{{ old('brand') }}" required>
-                @error('brand')
-                    <div class="text-red-500 text-sm">{{ $message }}</div>
-                @enderror
+                <label for="image_url" class="block text-gray-700 mb-2">Gambar</label>
+                <input type="file" id="image_url" name="image_url" accept="image/*" class="h-10">
             </div>
+        </div>
 
-            <div class="mb-4">
-                <label for="model" class="block mb-2 text-gray-700">Model</label>
-                <input type="text" name="model" id="model" class="w-full h-10 border-gray-300 bg-gray-100 pl-3"
-                    value="{{ old('model') }}" required>
-                @error('model')
-                    <div class="text-red-500 text-sm">{{ $message }}</div>
-                @enderror
-            </div>
-
-            <div class="mb-4">
-                <label for="category" class="block mb-2 text-gray-700">Kategori</label>
-                <select name="category" id="category" class="w-full h-10 border-gray-300 bg-gray-100 pl-3" required>
-                    <option value="Family" {{ old('category') == 'Family' ? 'selected' : '' }}>Family</option>
-                    <option value="Commercial" {{ old('category') == 'Commercial' ? 'selected' : '' }}>Commercial</option>
-                    <option value="Luxury" {{ old('category') == 'Luxury' ? 'selected' : '' }}>Luxury</option>
-                    </option>
-                </select>
-                @error('category')
-                    <div class="text-red-500 text-sm">{{ $message }}</div>
-                @enderror
-            </div>
-
-            <div class="mb-4">
-                <label for="price" class="block mb-2 text-gray-700">Harga</label>
-                <input type="number" name="price" id="price" class="w-full h-10 border-gray-300 bg-gray-100 pl-3"
-                    value="{{ old('price') }}" required>
-                @error('price')
-                    <div class="text-red-500 text-sm">{{ $message }}</div>
-                @enderror
-            </div>
-
-            <div class="mb-4">
-                <label for="image_url" class="block mb-2 text-gray-700">Gambar</label>
-                <input type="file" name="image_url" id="image_url">
-                @error('image_url')
-                    <div class="text-red-500 text-sm">{{ $message }}</div>
-                @enderror
-            </div>
-
-            <div class="flex justify-end">
-                <a href="{{ route('cars.index') }}" class="bg-gray-500 h-10 w-32 text-white rounded-md flex items-center justify-center">
-                    Kembali
-                </a>
-                <button type="submit" class=" ml-2 px-4 py-2 w-32 bg-blue-500 text-white rounded-md hover:bg-blue-600">
-                    Simpan
-                </button>
-            </div>
-        </form>
-    </div>
+        <div class="flex justify-end mt-7">
+            <a href="{{ route('cars.index') }}" class="bg-gray-500 h-10 w-32 text-white rounded-md flex items-center justify-center">
+                Kembali
+            </a>
+            <button type="submit" class="ml-3 w-32 px-4 py-2 rounded-md bg-blue-700 text-white h-10 hover:bg-blue-800">Simpan</button>
+        </div>
+    </form>
 @endsection

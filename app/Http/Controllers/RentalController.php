@@ -26,29 +26,39 @@ class RentalController extends Controller
         if ($request->has('rent_date') && $request->rent_date != '') {
             $query->whereDate('rent_date', $request->rent_date);
         }
-
+        $query->whereIn('status', ['Menunggu persetujuan', 'Disetujui']);
         $rentals = $query->get();
         return view('pages.rentals.index', compact('rentals'));
     }
 
+    public function show($id)
+    {
+        $rental = Rental::with(['user', 'car'])->findOrFail($id);
+        return view('pages.rentals.detail', compact('rental'));
+    }
+
+
     public function indexed(Request $request)
     {
         $query = Rental::with(['user', 'car'])->orderBy('created_at', 'desc');
-        $query->where('status', 'Selesai');
+        $query->whereIn('status', ['Selesai', 'Ditolak']);
+
         if ($request->has('search') && $request->search != '') {
             $search = $request->search;
-            $query->whereHas('user', function ($q) use ($search) {
-                $q->where('username', 'like', '%' . $search . '%');
-            })->orWhereHas('car', function ($q) use ($search) {
-                $q->where('brand', 'like', '%' . $search . '%')
-                    ->orWhere('model', 'like', '%' . $search . '%');
-            })->orWhere('status', 'like', '%' . $search . '%');
+            $query->where(function ($q) use ($search) {
+                $q->whereHas('user', function ($q) use ($search) {
+                    $q->where('username', 'like', '%' . $search . '%');
+                })->orWhereHas('car', function ($q) use ($search) {
+                    $q->where('brand', 'like', '%' . $search . '%')
+                        ->orWhere('model', 'like', '%' . $search . '%');
+                })->orWhere('status', 'like', '%' . $search . '%');
+            });
         }
 
         if ($request->has('rent_date') && $request->rent_date != '') {
             $query->whereDate('rent_date', $request->rent_date);
         }
-
+        $query->whereIn('status', ['Selesai', 'Ditolak']);
         $rentals = $query->get();
         return view('pages.returns.index', compact('rentals'));
     }

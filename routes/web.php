@@ -39,6 +39,7 @@ Route::delete('/users/{id}', [UserController::class, 'destroy'])->name('users.de
 
 
 
+
 Route::get('/cars', [CarController::class, 'index'])->name('cars.index');
 Route::get('/cars/create', [CarController::class, 'create'])->name('cars.create');
 Route::get('cars/{id}', [CarController::class, 'show'])->name('cars.show');
@@ -61,4 +62,3 @@ Route::patch('/rentals/{rental}/updateStatus', [RentalController::class, 'update
 
 Route::get('/returns', [RentalController::class, 'indexed'])->name('returns.index');
 Route::get('/returns/{id}', [RentalController::class, 'show'])->name('returns.show');
-Route::patch('/returns/{transaction}/update', [RentalController::class, 'update'])->name('returns.update');
