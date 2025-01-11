@@ -62,9 +62,9 @@ class UserController extends Controller
     public function update(Request $request, User $user)
     {
         $rules = [
-            'name' => 'required|string|max:255',
-            'username' => 'required|string|max:255|unique:users,username,' . $user->id,
-            'email' => 'required|email|max:255|unique:users,email,' . $user->id,
+            'name' => 'required|string|max:50',
+            'username' => 'required|string|max:50|unique:users,username,' . $user->id,
+            'email' => 'required|email|max:50|unique:users,email,' . $user->id,
             'password' => 'nullable|string|min:8|confirmed',
         ];
 

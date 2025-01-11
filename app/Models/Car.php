@@ -30,11 +30,6 @@ class Car extends Model
 
     public $timestamps = false;
 
-    /**
-     * Relasi ke tabel rentals.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
     public function rentals()
     {
         return $this->hasMany(Rental::class);

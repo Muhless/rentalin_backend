@@ -58,7 +58,5 @@ Route::put('/rentals/{id}', [RentalController::class, 'update'])->name('rentals.
 Route::delete('/rentals/{id}', [RentalController::class, 'destroy'])->name('rentals.destroy');
 Route::patch('/rentals/{rental}/updateStatus', [RentalController::class, 'updateStatus'])->name('rentals.updateStatus');
 
-
-
 Route::get('/returns', [RentalController::class, 'indexed'])->name('returns.index');
 Route::get('/returns/{id}', [RentalController::class, 'show'])->name('returns.show');

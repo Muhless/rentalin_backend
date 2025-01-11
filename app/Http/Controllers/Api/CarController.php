@@ -29,12 +29,12 @@ class CarController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'category' => 'string|max:255',
-            'brand' => 'string|max:255',
-            'model' => 'string|max:255',
+            'category' => 'string|max:50',
+            'brand' => 'string|max:50',
+            'model' => 'string|max:50',
             'image_url' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:5120',
             'price' => 'numeric',
-            'status' => 'string|max:255',
+            'status' => 'string|max:50',
         ]);
 
         $imagePath = null;
@@ -59,12 +59,12 @@ class CarController extends Controller
         $car = Car::findOrFail($id);
 
         $request->validate([
-            'category' => 'string|max:255',
-            'brand' => 'string|max:255',
-            'model' => 'string|max:255',
+            'category' => 'string|max:50',
+            'brand' => 'string|max:50',
+            'model' => 'string|max:50',
             'image_url' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:5120',
             'price' => 'numeric',
-            'status' => 'string|max:255',
+            'status' => 'string|max:50',
         ]);
 
         if ($request->hasFile('image_url')) {
